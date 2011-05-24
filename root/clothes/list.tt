@@ -1,0 +1,19 @@
+
+<div class="content">
+	<p>
+		This page lists all the clothes available.
+		Click on a piece of clothing to drill into it.
+	</p>
+		[% FOREACH category IN clothes -%]
+			[% cat_name = category.key %]
+			[% clothes_in_cat = category.value %]
+
+			<b><a href="/categories/category/[% cat_name %]">[% cat_name %]</a></b>
+			<ul>
+			[% FOREACH clothes_item = clothes_in_cat -%]
+					<li><a href="/clothes/clothing/[% clothes_item %]">[% clothes_item %]</a></li>
+			[% END -%]
+			</ul>
+		[% END -%]
+	</table>
+</div>

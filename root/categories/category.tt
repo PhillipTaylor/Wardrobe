@@ -1,0 +1,13 @@
+
+<div class="content">
+	<p>
+		Clothing under the category: [% category_name %]
+	</p>
+	<table>
+		[% FOREACH clothing_name IN clothes -%]
+		<tr>
+			<td><a href="/clothes/clothing/[% clothing_name %]">[% clothing_name %]</td>
+		</tr>
+		[% END -%]
+	</table>
+</div>

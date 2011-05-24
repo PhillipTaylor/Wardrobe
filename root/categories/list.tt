@@ -1,0 +1,14 @@
+
+<div class="content">
+	<p>
+		This page lists the clothing categories.
+		Click on a category to drill into it.
+	</p>
+	<table>
+		[% FOREACH category IN categories -%]
+		<tr>
+			<td><a href="category/[% category %]">[% category %]</a></td>
+		</tr>
+		[% END -%]
+	</table>
+</div>
