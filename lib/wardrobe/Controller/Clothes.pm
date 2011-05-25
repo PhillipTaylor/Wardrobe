@@ -1,6 +1,7 @@
 package wardrobe::Controller::Clothes;
 use Moose;
 use namespace::autoclean;
+use Data::Dumper;
 
 BEGIN {extends 'Catalyst::Controller'; }
 
@@ -30,36 +31,43 @@ sub index :Path :Args(0) {
 sub list :Path :Args(0) {
 	my ( $self, $c ) = @_;
 
-	my @shirts = (
-		"Calvin Klein Medium Plain Shirt",
-		"Micheal Smith Polo Shirt",
-		"Nike football Shirt"
-	);
+	my %clothes_by_cat = ();
+	my @clothes = wardrobe->get_schema()->resultset('Clothing')->all();
+	my %categories = ();
+	
+	$c->log->debug("There are " . scalar @clothes . " clothing items: " . join(@clothes,', '));
 
-	my %clothes = (
-		"shirts" => \@shirts,
-		"shoes"  => \@shirts
-	);
+	# Possibly replaceable with DBIx::Class grouping function?
+	foreach my $item (@clothes) {
+		if (exists $clothes_by_cat{$item->category_id}) {
+			push(@{ $clothes_by_cat{$item->category_id} }, $item);
+			$c->log->debug("$item->name pushed into category $item->category_id");
+		} else {
+			$clothes_by_cat{$item->category_id} = [ $item ];
+			$categories{$item->category_id} = $item->category->name;
+			$c->log->debug("$item->name pushed into NEW category $item->category_id");
+		}
+	}
 
+	$c->log->debug(Dumper(\%clothes_by_cat));
+
+	$c->log->debug("There are " . scalar %categories . " items.");
 
 	$c->stash(
 		template   => 'clothes/list.tt',
-		clothes    => \%clothes
+		clothes    => \%clothes_by_cat,
+		categories => \%categories
 	);
 }
 
-sub clothing :Chained('/') :PathPart('clothes/clothing') :Args(1) {
-	my ($self, $c, $clothing_name) = @_;
+sub clothing :Chained('/') :PathPart('clothes/clothing') :Args(2) {
+	my ($self, $c, $clothing_id, $clothing_name) = @_;
 
-	my %item = (
-		"clothing_name" => "Nice Shirt",
-		"category"      => "Shirt",
-		"colour"        => "Red"
-	);
+	my $item = wardrobe->get_schema()->resultset('Clothing')->find($clothing_id);
 
 	$c->stash(
-		template => 'clothes/clothing.tt',
-		item     => \%item
+		'template' => 'clothes/clothing.tt',
+		'item'     => $item
 	);
 
 }

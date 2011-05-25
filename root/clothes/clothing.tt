@@ -1,6 +1,6 @@
 
 <div class="content">
 	<p>
-		details of [% item.clothing_name %] (category: [% item.category %]) which is [% item.colour %]
+		Details of [% item.name %] (category: [% item.category.name %])
 	</p>
 </div>

@@ -4,9 +4,9 @@
 		Clothing under the category: [% category_name %]
 	</p>
 	<table>
-		[% FOREACH clothing_name IN clothes -%]
+		[% FOREACH clothing IN clothes -%]
 		<tr>
-			<td><a href="/clothes/clothing/[% clothing_name %]">[% clothing_name %]</td>
+			<td><a href="/clothes/clothing/[% clothing.id %]/[% clothing.name %]">[% clothing.name %]</td>
 		</tr>
 		[% END -%]
 	</table>

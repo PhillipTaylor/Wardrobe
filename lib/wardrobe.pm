@@ -46,7 +46,6 @@ __PACKAGE__->config(
 
 __PACKAGE__->log(Catalyst::Log::Log4perl->new());
 
-#get_logger()->info("Connecting to database $db_user@$db_name");
 our $schema = wardrobe::Model::Main->connect('dbi:Pg:dbname=wardrobe', 'username', 'password');
 
 sub get_schema() {

@@ -5,13 +5,14 @@
 		Click on a piece of clothing to drill into it.
 	</p>
 		[% FOREACH category IN clothes -%]
-			[% cat_name = category.key %]
-			[% clothes_in_cat = category.value %]
+			[% category_id    = category.key %]
+			[% category_name  = categories.$category_id %]
+			[% clothing_items = category.value %]
 
-			<b><a href="/categories/category/[% cat_name %]">[% cat_name %]</a></b>
+			<b><a href="/categories/category/[% category_id %]/[% category_name %]">[% category_name %]</a></b>
 			<ul>
-			[% FOREACH clothes_item = clothes_in_cat -%]
-					<li><a href="/clothes/clothing/[% clothes_item %]">[% clothes_item %]</a></li>
+			[% FOREACH clothing_item = clothing_items -%]
+					<li><a href="/clothes/clothing/[% clothing_item.clothing_id %]/[% clothing_item.name %]">[% clothing_item.name %]</a></li>
 			[% END -%]
 			</ul>
 		[% END -%]

@@ -42,12 +42,12 @@ sub list :Local {
 	);
 }
 
-sub category :Chained('/') :PathPart('categories/category') :Args(1) {
-	my ($self, $c, $category_name) = @_;
+sub category :Chained('/') :PathPart('categories/category') :Args(2) {
+	my ($self, $c, $category_id, $category_name) = @_;
 
-	#print "looking up information on $category_name (resultset currently hardcoded to shirts)";
-
-	my @clothes = ("Calvin Klein Medium Plain Shirt", "Micheal Smith Polo Shirt", "Nike football Shirt");
+	my @clothes = wardrobe->get_schema()->resultset('Clothing')->search({
+		'category_id' => $category_id
+	});
 
 	$c->stash(
 		template      => 'categories/category.tt',
