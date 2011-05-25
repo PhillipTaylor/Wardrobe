@@ -4,6 +4,19 @@
 		This page lists all the clothes available.
 		Click on a piece of clothing to drill into it.
 	</p>
+	<p>
+		<form method="post" action="/clothes">
+			Name:
+			<input name="name_filter" type="text" size="32" value="[% name_filter %]" />
+			<input type="submit" value="Search">
+		</form>
+	</p>
+	<p>
+		<p>
+			[% IF (name_filter != "") %]
+				<b>[% rs_count %] results for search term [% name_filter %]
+			[% END %]
+		</p>
 		[% FOREACH category IN clothes -%]
 			[% category_id    = category.key %]
 			[% category_name  = categories.$category_id %]
@@ -16,5 +29,5 @@
 			[% END -%]
 			</ul>
 		[% END -%]
-	</table>
+	</p>
 </div>
