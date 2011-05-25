@@ -41,7 +41,7 @@ sub list :Path :Args(0) {
 		$qry = $c->req->params->{"name_filter"};
 		$c->log->debug("filter: $qry.");
 		@clothes = Wardrobe->get_schema()->resultset('Clothing')->search({
-			name => { 'like', '%' . $qry . '%' }
+			'name' => { 'ilike', '%' . $qry . '%' }
 		});
 	} else {
 		@clothes = Wardrobe->get_schema()->resultset('Clothing')->all();
