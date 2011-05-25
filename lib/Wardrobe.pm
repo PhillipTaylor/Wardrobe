@@ -1,7 +1,7 @@
-package wardrobe;
+package Wardrobe;
 use Moose;
 use namespace::autoclean;
-use wardrobe::Model::Main;
+use Wardrobe::Model::Main;
 
 use Catalyst::Runtime 5.80;
 
@@ -31,7 +31,7 @@ our $VERSION = '0.01';
 
 # Configure the application.
 #
-# Note that settings in wardrobe.conf (or other external
+# Note that settings in Wardrobe.conf (or other external
 # configuration file that you set up manually) take precedence
 # over this when using ConfigLoader. Thus configuration
 # details given here can function as a default configuration,
@@ -39,14 +39,14 @@ our $VERSION = '0.01';
 # local deployment.
 
 __PACKAGE__->config(
-    name => 'wardrobe',
+    name => 'Wardrobe',
     # Disable deprecated behavior needed by old applications
     disable_component_resolution_regex_fallback => 1,
 );
 
 __PACKAGE__->log(Catalyst::Log::Log4perl->new());
 
-our $schema = wardrobe::Model::Main->connect('dbi:Pg:dbname=wardrobe', 'username', 'password');
+our $schema = Wardrobe::Model::Main->connect('dbi:Pg:dbname=wardrobe', 'username', 'password');
 
 sub get_schema() {
 	return $schema;
@@ -58,11 +58,11 @@ __PACKAGE__->setup();
 
 =head1 NAME
 
-wardrobe - Catalyst based application
+Wardrobe - Catalyst based application
 
 =head1 SYNOPSIS
 
-    script/wardrobe_server.pl
+    script/Wardrobe_server.pl
 
 =head1 DESCRIPTION
 
@@ -70,7 +70,7 @@ wardrobe - Catalyst based application
 
 =head1 SEE ALSO
 
-L<wardrobe::Controller::Root>, L<Catalyst>
+L<Wardrobe::Controller::Root>, L<Catalyst>
 
 =head1 AUTHOR
 

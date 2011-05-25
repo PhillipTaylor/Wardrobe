@@ -4,17 +4,17 @@ use strict;
 use warnings;
 
 use Catalyst::ScriptRunner;
-Catalyst::ScriptRunner->run('wardrobe', 'Create');
+Catalyst::ScriptRunner->run('Wardrobe', 'Create');
 
 1;
 
 =head1 NAME
 
-wardrobe_create.pl - Create a new Catalyst Component
+Wardrobe_create.pl - Create a new Catalyst Component
 
 =head1 SYNOPSIS
 
-wardrobe_create.pl [options] model|view|controller name [helper] [options]
+Wardrobe_create.pl [options] model|view|controller name [helper] [options]
 
  Options:
    --force        don't create a .new file where a file to be created exists
@@ -22,14 +22,14 @@ wardrobe_create.pl [options] model|view|controller name [helper] [options]
    --help         display this help and exits
 
  Examples:
-   wardrobe_create.pl controller My::Controller
-   wardrobe_create.pl -mechanize controller My::Controller
-   wardrobe_create.pl view My::View
-   wardrobe_create.pl view HTML TT
-   wardrobe_create.pl model My::Model
-   wardrobe_create.pl model SomeDB DBIC::Schema MyApp::Schema create=dynamic\
+   Wardrobe_create.pl controller My::Controller
+   Wardrobe_create.pl -mechanize controller My::Controller
+   Wardrobe_create.pl view My::View
+   Wardrobe_create.pl view HTML TT
+   Wardrobe_create.pl model My::Model
+   Wardrobe_create.pl model SomeDB DBIC::Schema MyApp::Schema create=dynamic\
    dbi:SQLite:/tmp/my.db
-   wardrobe_create.pl model AnotherDB DBIC::Schema MyApp::Schema create=static\
+   Wardrobe_create.pl model AnotherDB DBIC::Schema MyApp::Schema create=static\
    [Loader opts like db_schema, naming] dbi:Pg:dbname=foo root 4321
    [connect_info opts like quote_char, name_sep]
 

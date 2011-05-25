@@ -1,4 +1,4 @@
-package wardrobe::View::HTML;
+package Wardrobe::View::HTML;
 
 use strict;
 use warnings;
@@ -12,15 +12,15 @@ __PACKAGE__->config(
 
 =head1 NAME
 
-wardrobe::View::HTML - TT View for wardrobe
+Wardrobe::View::HTML - TT View for Wardrobe
 
 =head1 DESCRIPTION
 
-TT View for wardrobe.
+TT View for Wardrobe.
 
 =head1 SEE ALSO
 
-L<wardrobe>
+L<Wardrobe>
 
 =head1 AUTHOR
 

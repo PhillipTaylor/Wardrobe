@@ -1,13 +1,13 @@
-package wardrobe::Controller::Categories;
+package Wardrobe::Controller::Categories;
 use Moose;
 use namespace::autoclean;
-use wardrobe;
+use Wardrobe;
 
 BEGIN {extends 'Catalyst::Controller'; }
 
 =head1 NAME
 
-wardrobe::Controller::Categories - Catalyst Controller
+Wardrobe::Controller::Categories - Catalyst Controller
 
 =head1 DESCRIPTION
 
@@ -32,7 +32,7 @@ sub index :Path :Args(0) {
 sub list :Local {
 	my ($self, $c) = @_;
 
-	my @categories = wardrobe->get_schema()->resultset('Category')->all();
+	my @categories = Wardrobe->get_schema()->resultset('Category')->all();
 
 	$c->log->debug("There are " . scalar @categories . " categories: " . join(@categories,', '));
 
@@ -45,7 +45,7 @@ sub list :Local {
 sub category :Chained('/') :PathPart('categories/category') :Args(2) {
 	my ($self, $c, $category_id, $category_name) = @_;
 
-	my @clothes = wardrobe->get_schema()->resultset('Clothing')->search({
+	my @clothes = Wardrobe->get_schema()->resultset('Clothing')->search({
 		'category_id' => $category_id
 	});
 

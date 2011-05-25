@@ -5,17 +5,17 @@ BEGIN {
 }
 
 use Catalyst::ScriptRunner;
-Catalyst::ScriptRunner->run('wardrobe', 'Server');
+Catalyst::ScriptRunner->run('Wardrobe', 'Server');
 
 1;
 
 =head1 NAME
 
-wardrobe_server.pl - Catalyst Test Server
+Wardrobe_server.pl - Catalyst Test Server
 
 =head1 SYNOPSIS
 
-wardrobe_server.pl [options]
+Wardrobe_server.pl [options]
 
    -d --debug           force debug mode
    -f --fork            handle each request in a new process

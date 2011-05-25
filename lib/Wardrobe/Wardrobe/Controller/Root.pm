@@ -1,4 +1,4 @@
-package wardrobe::Controller::Root;
+package Wardrobe::Controller::Root;
 use Moose;
 use namespace::autoclean;
 
@@ -12,7 +12,7 @@ __PACKAGE__->config(namespace => '');
 
 =head1 NAME
 
-wardrobe::Controller::Root - Root Controller for wardrobe
+Wardrobe::Controller::Root - Root Controller for Wardrobe
 
 =head1 DESCRIPTION
 

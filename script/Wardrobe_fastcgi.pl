@@ -1,17 +1,17 @@
 #!/usr/bin/env perl
 
 use Catalyst::ScriptRunner;
-Catalyst::ScriptRunner->run('wardrobe', 'FastCGI');
+Catalyst::ScriptRunner->run('Wardrobe', 'FastCGI');
 
 1;
 
 =head1 NAME
 
-wardrobe_fastcgi.pl - Catalyst FastCGI
+Wardrobe_fastcgi.pl - Catalyst FastCGI
 
 =head1 SYNOPSIS
 
-wardrobe_fastcgi.pl [options]
+Wardrobe_fastcgi.pl [options]
 
  Options:
    -? -help      display this help and exits

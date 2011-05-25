@@ -1,4 +1,4 @@
-package wardrobe::Controller::Clothes;
+package Wardrobe::Controller::Clothes;
 use Moose;
 use namespace::autoclean;
 use Data::Dumper;
@@ -7,7 +7,7 @@ BEGIN {extends 'Catalyst::Controller'; }
 
 =head1 NAME
 
-wardrobe::Controller::Clothes - Catalyst Controller
+Wardrobe::Controller::Clothes - Catalyst Controller
 
 =head1 DESCRIPTION
 
@@ -32,7 +32,7 @@ sub list :Path :Args(0) {
 	my ( $self, $c ) = @_;
 
 	my %clothes_by_cat = ();
-	my @clothes = wardrobe->get_schema()->resultset('Clothing')->all();
+	my @clothes = Wardrobe->get_schema()->resultset('Clothing')->all();
 	my %categories = ();
 	
 	$c->log->debug("There are " . scalar @clothes . " clothing items: " . join(@clothes,', '));
@@ -63,7 +63,7 @@ sub list :Path :Args(0) {
 sub clothing :Chained('/') :PathPart('clothes/clothing') :Args(2) {
 	my ($self, $c, $clothing_id, $clothing_name) = @_;
 
-	my $item = wardrobe->get_schema()->resultset('Clothing')->find($clothing_id);
+	my $item = Wardrobe->get_schema()->resultset('Clothing')->find($clothing_id);
 
 	$c->stash(
 		'template' => 'clothes/clothing.tt',

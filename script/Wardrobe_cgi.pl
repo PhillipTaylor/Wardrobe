@@ -1,13 +1,13 @@
 #!/usr/bin/env perl
 
 use Catalyst::ScriptRunner;
-Catalyst::ScriptRunner->run('wardrobe', 'CGI');
+Catalyst::ScriptRunner->run('Wardrobe', 'CGI');
 
 1;
 
 =head1 NAME
 
-wardrobe_cgi.pl - Catalyst CGI
+Wardrobe_cgi.pl - Catalyst CGI
 
 =head1 SYNOPSIS
 
