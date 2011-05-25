@@ -1,6 +1,7 @@
 package wardrobe::Controller::Categories;
 use Moose;
 use namespace::autoclean;
+use wardrobe;
 
 BEGIN {extends 'Catalyst::Controller'; }
 
@@ -31,7 +32,9 @@ sub index :Path :Args(0) {
 sub list :Local {
 	my ($self, $c) = @_;
 
-	my @categories = ("shoes", "shirt", "shorts", "ties", "handbags", "accessories");
+	my @categories = wardrobe->get_schema()->resultset('Category')->all();
+
+	$c->log->debug("There are " . scalar @categories . " categories: " . join(@categories,', '));
 
 	$c->stash(
 		template   => 'categories/list.tt',
