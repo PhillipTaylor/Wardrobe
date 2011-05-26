@@ -1,0 +1,20 @@
+
+<div class="content">
+	<p>
+		Details of [% outfit.name %]
+	</p>
+	<p>
+		[% IF outfit.clothes.size %]
+			The following items of clothing are in these tags.
+			<ul>
+			[% FOREACH clothing = outfit.clothes -%]
+				<li><a href="/clothes/clothing/[% clothing.clothing_id %]/[% clothing.name %]">[% clothing.name %]</a></li>
+			[% END %]
+			</ul>
+		[% ELSE %]
+			This item of clothing is not associated with this tag.
+		[% END %]
+	</p>
+	<p>
+	</p>
+</div>

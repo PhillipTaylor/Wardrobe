@@ -40,9 +40,13 @@ sub list :Path :Args(0) {
 	if (lc $c->req->method eq 'post') {
 		$qry = $c->req->params->{"name_filter"};
 		$c->log->debug("filter: $qry.");
-		@clothes = Wardrobe->get_schema()->resultset('Clothing')->search({
-			'name' => { 'ilike', '%' . $qry . '%' }
-		});
+		@clothes = Wardrobe->get_schema()->resultset('Clothing')->search(
+			{ 'name' => { 'ilike', '%' . $qry . '%' } },
+		#	{
+		#		'join'     => 'tagged_clothing',
+		#		'prefetch' => 'tagged_clothing'
+		#	}
+		);
 	} else {
 		@clothes = Wardrobe->get_schema()->resultset('Clothing')->all();
 	}
@@ -64,7 +68,7 @@ sub list :Path :Args(0) {
 		$result_count++;
 	}
 
-	#$c->log->debug(Dumper(\%clothes_by_cat));
+	$c->log->debug(Dumper(\%clothes_by_cat));
 
 	$c->log->debug("There are " . scalar %categories . " items.");
 	$c->log->debug("qry = $qry");

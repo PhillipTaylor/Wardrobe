@@ -4,16 +4,20 @@ drop table clothing;
 drop table category;
 drop table outfit;
 
+-- CATEGORIES
+
 create table category (
-	category_id   integer not null,
+	category_id   serial not null,
 	name          varchar(255) not null
 );
 
 alter table category add constraint ccategory_pk1
 	primary key (category_id);
 
+-- CLOTHING
+
 create table clothing (
-	clothing_id   integer not null,
+	clothing_id   serial not null,
 	name          varchar(255) not null,
 	category_id   integer not null
 );
@@ -22,15 +26,19 @@ alter table clothing add constraint cclothing_pk1
 	primary key (clothing_id);
 
 alter table clothing add constraint cclothing_fk1
-	foreign key (category_id) references tCategory (category_id);
+	foreign key (category_id) references category (category_id);
+
+-- OUTFITS
 
 create table outfit (
-	outfit_id      integer not null,
+	outfit_id      serial not null,
 	name           varchar(255) not null
 );
 
 alter table outfit add constraint coutfit_pk
 	primary key(outfit_id);
+
+-- TAGGED CLOTHES
 
 create table tagged_clothing (
 	clothing_id    integer not null,

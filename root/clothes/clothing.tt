@@ -3,4 +3,24 @@
 	<p>
 		Details of [% item.name %] (category: [% item.category.name %])
 	</p>
+	<p>
+		[% IF item.outfits.size %]
+			This item of clothing goes in the these tags
+			<ul>
+			[% FOREACH outfit = item.outfits -%]
+				<li><a href="/tags/tag/[% outfit.outfit_id %]/[% outfit.name %]">[% outfit.name %]</a></li>
+			[% END %]
+			</ul>
+		[% ELSE %]
+			This item of clothing is not associated with any tags.
+		[% END %]
+	</p>
+	<p>
+		Tag this item of clothing as part of an outfit.<br />
+		<form method="post" action="/tags/add">
+			<input type="hidden" name="clothing_id" value="[% item.clothing_id %]" />
+			<input type="text" name="tag" />
+			<input type="submit" value="Tag!" />
+		</form>
+	</p>
 </div>

@@ -1,0 +1,15 @@
+
+<div class="content">
+	<p>
+		[% IF outfits.size %]
+			List of available outfits
+			<ul>
+			[% FOREACH outfit = outfits -%]
+				<li><a href="/tags/tag/[% outfit.outfit_id %]/[% outfit.name %]">[% outfit.name %]</a></li>
+			[% END %]
+			</ul>
+		[% ELSE %]
+			There are no outfits
+		[% END %]
+	</p>
+</div>
