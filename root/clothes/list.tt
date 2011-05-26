@@ -25,7 +25,20 @@
 			<b><a href="/categories/category/[% category_id %]/[% category_name %]">[% category_name %]</a></b>
 			<ul>
 			[% FOREACH clothing_item = clothing_items -%]
-					<li><a href="/clothes/clothing/[% clothing_item.clothing_id %]/[% clothing_item.name %]">[% clothing_item.name %]</a></li>
+					<li>
+						<a href="/clothes/clothing/[% clothing_item.clothing_id %]/[% clothing_item.name %]">[% clothing_item.name %]</a>
+						[% IF clothing_item.outfits.size %]
+							<span class="small">(
+							[% FOREACH outfit = clothing_item.outfits %]
+								[% IF loop.first %]
+									[% outfit.name %]
+								[% ELSE %]
+									,&nbsp;[% outfit.name %]
+								[% END %]
+							[% END %]
+							)</span>
+						[% END %]
+					</li>
 			[% END -%]
 			</ul>
 		[% END -%]

@@ -42,10 +42,10 @@ sub list :Path :Args(0) {
 		$c->log->debug("filter: $qry.");
 		@clothes = Wardrobe->get_schema()->resultset('Clothing')->search(
 			{ 'name' => { 'ilike', '%' . $qry . '%' } },
-		#	{
-		#		'join'     => 'tagged_clothing',
-		#		'prefetch' => 'tagged_clothing'
-		#	}
+			{
+				'join'     => 'tagged_clothing',
+				'prefetch' => 'tagged_clothing'
+			}
 		);
 	} else {
 		@clothes = Wardrobe->get_schema()->resultset('Clothing')->all();
