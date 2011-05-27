@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>[% title %]</title>
+	</head>
+	<body>
+		<h1>[% title %]</h1>
+		<div>
+			<h2>Menu:
+				<a href="/">Root</a>&nbsp;
+				<a href="/clothes/">Clothes</a>&nbsp;
+				<a href="/categories/">Categories</a>&nbsp;
+				<a href="/tags/">Tags</a>
+			</h2>
+		</div>
+		<div>
+			[% content %]
+		</div>
+	</body>
+</html>
