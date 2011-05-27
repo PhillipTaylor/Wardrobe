@@ -7,4 +7,28 @@
 		<input type="file" name="csv_file">
 		<input type="submit" value="Import">
 	</form>
+
+	[% IF upload_complete %]
+	<p>
+		Upload Complete. Statistics:
+		<table>
+			<tr>
+				<th></th>
+				<th></th>
+			</tr>
+			<tr>
+				<td>Total Rows</td>
+				<td>[% rows %]</td>
+			</tr>
+			<tr>
+				<td>Bad Record</td>
+				<td>[% bad %]</td>
+			</tr>
+			<tr>
+				<td>Dupes</td>
+				<td>[% dupes %]</td>
+			</tr>
+	</p>
+	[% END %]
 </p>
+

@@ -35,8 +35,8 @@ sub index :Path :Args(0) {
 
     # Hello World
     $c->stash(
-		template     => 'index.tt',
-#		upload_count => $upload_count
+		template        => 'index.tt',
+		upload_complete => 0
 	);
 }
 
@@ -58,45 +58,17 @@ sub csv_upload :Local {
 	my @results = ();
 	my $upload = $c->req->upload('csv_file');
 
-	my $parser = Text::CSV::Encoded->new({
-		encoding_in      => "utf8",
-		escape_char      => '"',
-		sep_char         => ',',
-		allow_whitespace => 1
-	});
+	$c->log->debug("upload: $upload->tempname");
 
-	$c->log->debug("filename is: " . $upload->filename);
-
-	my $fh = $upload->fh;
-	my $line_no = 0;
-
-	foreach my $line (<$fh>) {
-		
-		$c->log->debug("LINE: $line");
-		if (!$parser->parse($line)) {
-			$c->log->warn("Skipped line $line_no - broken");
-			push (@results, [ $line_no, $line, "failed to parse" ]);
-		} else {
-
-			if ($line_no == 0) {
-				$line_no++;
-				next;
-			} else {
-				(my $clothing_name, my $category_name) = $parser->fields();
-				$c->log->debug("Parsed: Clothing Name: $clothing_name| Category Name: $category_name");
-
-				Wardrobe::Model::Main->create_clothing_and_category($clothing_name, $category_name);
-
-			}
-		}
-
-		$line_no++;
-	}
-
-	close $fh;
+	# assume header record
+	(my $rows, my $bad, my $dupes) = Wardrobe::Model::Main->create_from_csv_file($upload->tempname, 1);
 
 	$c->stash(
-		template => 'index.tt'
+		template        => 'index.tt',
+		upload_complete => 1,
+		rows            => $rows,
+		bad             => $bad,
+		dupes           => $dupes
 	);
 
 }

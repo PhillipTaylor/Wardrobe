@@ -1,11 +1,59 @@
 
 package Wardrobe::Model::Main;
 use base qw/DBIx::Class::Schema/;
+use Text::CSV::Encoded;
 __PACKAGE__->load_namespaces;
 
-# TODO: Only creates it if it doesn't already exist.
+# creat_from_csv_file (str filename, bool header_record);
+sub create_from_csv_file {
+	my ($self, $csv_filename, $header_record) = @_;
+
+	my $parser = Text::CSV::Encoded->new({
+		encoding_in      => "utf8",
+		encoding_out     => "utf8",
+		escape_char      => '"',
+		sep_char         => ',',
+		allow_whitespace => 1
+	});
+
+	Wardrobe->log->info("loading in new data from $csv_filename");
+
+	open my $fh, "<", $csv_filename;
+
+	my $line_no   = 0;
+	my $bad       = 0;
+	my $dupes     = 0;
+
+	foreach my $line (<$fh>) {
+		
+		if (!$parser->parse($line)) {
+			Wardrobe->log->warn("Skipped line $line_no - broken");
+			$bad++;
+		} else {
+
+			if ($line_no == 0 && $header_record) {
+				$line_no++;
+				next;
+			} else {
+				(my $clothing_name, my $category_name) = $parser->fields();
+				my $added = create_clothing_and_category($clothing_name, $category_name);
+
+				if (!$added) {
+					$dupes++;
+				}
+			}
+		}
+
+		$line_no++;
+	}
+
+	close $fh;
+
+	return ($line_no, $bad, $dupes);
+}
+
 sub create_clothing_and_category {
-	my ($self, $clothing_name, $category_name) = @_;
+	my ($clothing_name, $category_name) = @_;
 	Wardrobe->log->debug("Parsed: Clothing Name: $clothing_name| Category Name: $category_name");
 
 	my $clothing_item = Wardrobe->get_schema()->resultset('Clothing')->search({
@@ -14,7 +62,7 @@ sub create_clothing_and_category {
 
 	if ($clothing_item) {
 		Wardrobe->log->warn('Existing clothing item found. skipped');
-		return;
+		return 0;
 	}
 
 	my $category = Wardrobe->get_schema()->resultset('Category')->find_or_create({
@@ -26,7 +74,8 @@ sub create_clothing_and_category {
 		name => $clothing_name,
 		category => $category
 	});
-	
+
+	return 1;
 }
 
 1;
