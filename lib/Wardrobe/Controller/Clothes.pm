@@ -59,11 +59,9 @@ sub list :Path :Args(0) {
 	foreach my $item (@clothes) {
 		if (exists $clothes_by_cat{$item->category_id}) {
 			push(@{ $clothes_by_cat{$item->category_id} }, $item);
-			$c->log->debug("$item->name pushed into category $item->category_id");
 		} else {
 			$clothes_by_cat{$item->category_id} = [ $item ];
 			$categories{$item->category_id} = $item->category->name;
-			$c->log->debug("$item->name pushed into NEW category $item->category_id");
 		}
 		$result_count++;
 	}

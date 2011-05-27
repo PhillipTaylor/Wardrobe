@@ -60,7 +60,7 @@ sub csv_upload :Local {
 
 	$c->log->debug("upload: $upload->tempname");
 
-	# assume header record
+	# assume header record for website
 	(my $rows, my $bad, my $dupes) = Wardrobe::Model::Main->create_from_csv_file($upload->tempname, 1);
 
 	$c->stash(

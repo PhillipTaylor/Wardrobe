@@ -34,12 +34,9 @@ our $VERSION = '0.01';
 __PACKAGE__->config('Plugin::ConfigLoader' => { file => 'Wardrobe.conf'});
 
 our $logger = Catalyst::Log::Log4perl->new();
-
 __PACKAGE__->log($logger);
 
-
-$logger->info("config: " . Dumper(__PACKAGE__->config));
-
+# singleton for accessing the DBIx Schema.
 our $schema = undef;
 
 sub get_schema {
