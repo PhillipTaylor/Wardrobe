@@ -14,6 +14,8 @@ create table category (
 alter table category add constraint ccategory_pk1
 	primary key (category_id);
 
+create unique index icategory on category(name);
+
 -- CLOTHING
 
 create table clothing (
@@ -27,6 +29,8 @@ alter table clothing add constraint cclothing_pk1
 
 alter table clothing add constraint cclothing_fk1
 	foreign key (category_id) references category (category_id);
+
+create unique index iclothing on clothing(name);
 
 -- OUTFITS
 

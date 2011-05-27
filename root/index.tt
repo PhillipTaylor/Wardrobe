@@ -1,0 +1,10 @@
+
+<p>
+	Welcome to Phillip's Wardrobe Web App!
+
+	<form method="post" action="/csv_upload" enctype="multipart/form-data">
+		Upload a CSV file here:
+		<input type="file" name="csv_file">
+		<input type="submit" value="Import">
+	</form>
+</p>

@@ -68,8 +68,6 @@ sub list :Path :Args(0) {
 		$result_count++;
 	}
 
-	$c->log->debug(Dumper(\%clothes_by_cat));
-
 	$c->log->debug("There are " . scalar %categories . " items.");
 	$c->log->debug("qry = $qry");
 

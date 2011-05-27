@@ -1,6 +1,8 @@
 package Wardrobe::Controller::Root;
 use Moose;
 use namespace::autoclean;
+use Text::CSV::Encoded;
+use Wardrobe::Model::Main;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -29,8 +31,13 @@ The root page (/)
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
+#	my $upload_count = $c->req->params{"upload_count"};
+
     # Hello World
-    $c->response->body( $c->welcome_message );
+    $c->stash(
+		template     => 'index.tt',
+#		upload_count => $upload_count
+	);
 }
 
 =head2 default
@@ -43,6 +50,55 @@ sub default :Path {
     my ( $self, $c ) = @_;
     $c->response->body( 'Page not found' );
     $c->response->status(404);
+}
+
+sub csv_upload :Local {
+	my ( $self, $c) = @_;
+
+	my @results = ();
+	my $upload = $c->req->upload('csv_file');
+
+	my $parser = Text::CSV::Encoded->new({
+		encoding_in      => "utf8",
+		escape_char      => '"',
+		sep_char         => ',',
+		allow_whitespace => 1
+	});
+
+	$c->log->debug("filename is: " . $upload->filename);
+
+	my $fh = $upload->fh;
+	my $line_no = 0;
+
+	foreach my $line (<$fh>) {
+		
+		$c->log->debug("LINE: $line");
+		if (!$parser->parse($line)) {
+			$c->log->warn("Skipped line $line_no - broken");
+			push (@results, [ $line_no, $line, "failed to parse" ]);
+		} else {
+
+			if ($line_no == 0) {
+				$line_no++;
+				next;
+			} else {
+				(my $clothing_name, my $category_name) = $parser->fields();
+				$c->log->debug("Parsed: Clothing Name: $clothing_name| Category Name: $category_name");
+
+				Wardrobe::Model::Main->create_clothing_and_category($clothing_name, $category_name);
+
+			}
+		}
+
+		$line_no++;
+	}
+
+	close $fh;
+
+	$c->stash(
+		template => 'index.tt'
+	);
+
 }
 
 =head2 end

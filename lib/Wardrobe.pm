@@ -44,11 +44,13 @@ __PACKAGE__->config(
     disable_component_resolution_regex_fallback => 1,
 );
 
-__PACKAGE__->log(Catalyst::Log::Log4perl->new());
+our $logger = Catalyst::Log::Log4perl->new();
+
+__PACKAGE__->log($logger);
 
 our $schema = Wardrobe::Model::Main->connect('dbi:Pg:dbname=wardrobe', 'username', 'password');
 
-sub get_schema() {
+sub get_schema {
 	return $schema;
 }
 
