@@ -1,7 +1,11 @@
 
+[% WRAPPER base.tt
+	title = "Clothing Item: $item.name"
+%]
+
 <div class="content">
 	<p>
-		Details of [% item.name %] (category: [% item.category.name %])
+		This item is in the category: [% item.category.name %]
 	</p>
 	<p>
 		[% IF item.outfits.size %]
@@ -24,3 +28,4 @@
 		</form>
 	</p>
 </div>
+[% END %]

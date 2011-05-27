@@ -1,4 +1,8 @@
 
+[% WRAPPER base.tt
+	title = "Browse Tags"
+%]
+
 <div class="content">
 	<p>
 		[% IF outfits.size %]
@@ -13,3 +17,4 @@
 		[% END %]
 	</p>
 </div>
+[% END %]

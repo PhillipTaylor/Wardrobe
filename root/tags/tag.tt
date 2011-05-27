@@ -1,8 +1,9 @@
 
+[% WRAPPER base.tt
+	title = "Outfits tagged: $outfit.name"
+%]
+
 <div class="content">
-	<p>
-		Details of [% outfit.name %]
-	</p>
 	<p>
 		[% IF outfit.clothes.size %]
 			The following items of clothing are in these tags.
@@ -15,6 +16,5 @@
 			This item of clothing is not associated with this tag.
 		[% END %]
 	</p>
-	<p>
-	</p>
 </div>
+[% END %]

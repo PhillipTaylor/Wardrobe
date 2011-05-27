@@ -1,4 +1,8 @@
 
+[% WRAPPER base.tt
+	title = "Browse Categories"
+%]
+
 <div class="content">
 	<p>
 		This page lists the clothing categories.
@@ -12,3 +16,4 @@
 		[% END -%]
 	</table>
 </div>
+[% END %]

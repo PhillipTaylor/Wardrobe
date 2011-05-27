@@ -1,4 +1,8 @@
 
+[% WRAPPER base.tt
+	title = "Browse Clothes"
+%]
+
 <div class="content">
 	<p>
 		This page lists all the clothes available.
@@ -44,3 +48,4 @@
 		[% END -%]
 	</p>
 </div>
+[% END %]

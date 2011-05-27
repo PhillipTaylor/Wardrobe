@@ -1,15 +1,20 @@
 
-<p>
-	Welcome to Phillip's Wardrobe Web App!
+[% WRAPPER base.tt
+	title = "Root Homepage"
+%]
 
-	<form method="post" action="/csv_upload" enctype="multipart/form-data">
-		Upload a CSV file here:
-		<input type="file" name="csv_file">
-		<input type="submit" value="Import">
-	</form>
+<div>
+	<div>
+		Welcome to Phillip's Wardrobe Web App!
 
+		<form method="post" action="/csv_upload" enctype="multipart/form-data">
+			Upload a CSV file here:
+			<input type="file" name="csv_file">
+			<input type="submit" value="Import">
+		</form>
+	</div>
 	[% IF upload_complete %]
-	<p>
+	<div>
 		Upload Complete. Statistics:
 		<table>
 			<tr>
@@ -28,7 +33,8 @@
 				<td>Dupes</td>
 				<td>[% dupes %]</td>
 			</tr>
-	</p>
+		</table>
+	</div>
 	[% END %]
-</p>
-
+</div>
+[% END %]
