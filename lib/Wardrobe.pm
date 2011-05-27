@@ -25,32 +25,32 @@ use Catalyst qw/
     Static::Simple
 /;
 
+use Data::Dumper;
+
 extends 'Catalyst';
 
 our $VERSION = '0.01';
 
-# Configure the application.
-#
-# Note that settings in Wardrobe.conf (or other external
-# configuration file that you set up manually) take precedence
-# over this when using ConfigLoader. Thus configuration
-# details given here can function as a default configuration,
-# with an external configuration file acting as an override for
-# local deployment.
-
-__PACKAGE__->config(
-    name => 'Wardrobe',
-    # Disable deprecated behavior needed by old applications
-    disable_component_resolution_regex_fallback => 1,
-);
+__PACKAGE__->config('Plugin::ConfigLoader' => { file => 'Wardrobe.conf'});
 
 our $logger = Catalyst::Log::Log4perl->new();
 
 __PACKAGE__->log($logger);
 
-our $schema = Wardrobe::Model::Main->connect('dbi:Pg:dbname=wardrobe', 'username', 'password');
+
+$logger->info("config: " . Dumper(__PACKAGE__->config));
+
+our $schema = undef;
 
 sub get_schema {
+
+	if (!$schema) {
+		my $db_connection = __PACKAGE__->config->{'db_connection_string'};
+		my $db_username   = __PACKAGE__->config->{'db_username'};
+		my $db_password   = __PACKAGE__->config->{'db_password'};
+		$schema = Wardrobe::Model::Main->connect($db_connection, $db_username, $db_password);
+	}
+
 	return $schema;
 }
 
