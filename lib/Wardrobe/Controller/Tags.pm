@@ -38,8 +38,6 @@ sub tag :Chained('/') :PathPart('tags/tag') :Args(2) {
 
 	my $outfit = Wardrobe->get_schema()->resultset('Outfit')->find($outfit_id);
 
-	$c->log->debug(Dumper($outfit));
-
 	$c->stash(
 		"template" => 'tags/tag.tt',
 		"outfit"  => $outfit
