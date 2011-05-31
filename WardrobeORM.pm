@@ -1,81 +1,24 @@
 
-package Wardrobe::Model::Main;
+package WardrobeORM;
 use base qw/DBIx::Class::Schema/;
+use Wardrobe;
 use Text::CSV::Encoded;
 __PACKAGE__->load_namespaces;
 
-# creat_from_csv_file (str filename, bool header_record);
-sub create_from_csv_file {
-	my ($self, $csv_filename, $header_record) = @_;
+# singleton for accessing the DBIx Schema.
+our $schema = undef;
 
-	my $parser = Text::CSV::Encoded->new({
-		encoding_in      => "utf8",
-		encoding_out     => "utf8",
-		escape_char      => '"',
-		sep_char         => ',',
-		allow_whitespace => 1
-	});
+sub get_schema {
 
-	Wardrobe->log->info("loading in new data from $csv_filename");
-
-	open my $fh, "<", $csv_filename;
-
-	my $line_no   = 0;
-	my $bad       = 0;
-	my $dupes     = 0;
-
-	foreach my $line (<$fh>) {
-		
-		if (!$parser->parse($line)) {
-			Wardrobe->log->warn("Skipped line $line_no - broken");
-			$bad++;
-		} else {
-
-			if ($line_no == 0 && $header_record) {
-				$line_no++;
-				next;
-			} else {
-				(my $clothing_name, my $category_name) = $parser->fields();
-				my $added = create_clothing_and_category($clothing_name, $category_name);
-
-				if (!$added) {
-					$dupes++;
-				}
-			}
-		}
-
-		$line_no++;
+	if (!$schema) {
+		my $db_connection = Wardrobe->config->{'db_connection_string'};
+		my $db_username   = Wardrobe->config->{'db_username'};
+		my $db_password   = Wardrobe->config->{'db_password'};
+		#Util->logger()->info("connecting to database...\n");
+		$schema = WardrobeORM->connect($db_connection, $db_username, $db_password);
 	}
 
-	close $fh;
-
-	return ($line_no, $bad, $dupes);
-}
-
-sub create_clothing_and_category {
-	my ($clothing_name, $category_name) = @_;
-	Wardrobe->log->debug("Parsed: Clothing Name: $clothing_name| Category Name: $category_name");
-
-	my $clothing_item = Wardrobe->get_schema()->resultset('Clothing')->search({
-		name => $clothing_name
-	})->single;
-
-	if ($clothing_item) {
-		Wardrobe->log->warn('Existing clothing item found. skipped');
-		return 0;
-	}
-
-	my $category = Wardrobe->get_schema()->resultset('Category')->find_or_create({
-		name => $category_name
-	}, { key => 'category_name' });
-
-	Wardrobe->log->info("creating new clothing: $clothing_name (category already exists: $category->in_storage)");
-	$clothing_item = Wardrobe->get_schema()->resultset('Clothing')->create({
-		name => $clothing_name,
-		category => $category
-	});
-
-	return 1;
+	return $schema;
 }
 
 1;

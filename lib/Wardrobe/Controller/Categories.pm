@@ -1,7 +1,9 @@
 package Wardrobe::Controller::Categories;
 use Moose;
 use namespace::autoclean;
-use Wardrobe;
+
+use Wardrobe::Model::Categories;
+use Wardrobe::Model::Clothing;
 
 BEGIN {extends 'Catalyst::Controller'; }
 
@@ -32,7 +34,7 @@ sub index :Path :Args(0) {
 sub list :Local {
 	my ($self, $c) = @_;
 
-	my @categories = Wardrobe->get_schema()->resultset('Category')->all();
+	my @categories = Wardrobe::Model::Categories->get_all_categories();
 
 	$c->log->debug("There are " . scalar @categories . " categories: " . join(@categories,', '));
 
@@ -45,9 +47,7 @@ sub list :Local {
 sub category :Chained('/') :PathPart('categories/category') :Args(2) {
 	my ($self, $c, $category_id, $category_name) = @_;
 
-	my @clothes = Wardrobe->get_schema()->resultset('Clothing')->search({
-		'category_id' => $category_id
-	});
+	my @clothes = Wardrobe::Model::Clothing->get_clothes_by_category($category_id);
 
 	$c->stash(
 		template      => 'categories/category.tt',

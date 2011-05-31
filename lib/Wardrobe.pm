@@ -1,7 +1,7 @@
 package Wardrobe;
 use Moose;
 use namespace::autoclean;
-use Wardrobe::Model::Main;
+use WardrobeORM;
 
 use Catalyst::Runtime 5.80;
 
@@ -35,22 +35,8 @@ our $VERSION = '0.01';
 __PACKAGE__->config('Plugin::ConfigLoader' => { file => 'Wardrobe.conf'});
 
 our $logger = Catalyst::Log::Log4perl->new();
+#Util->set_logger($logger);
 __PACKAGE__->log($logger);
-
-# singleton for accessing the DBIx Schema.
-our $schema = undef;
-
-sub get_schema {
-
-	if (!$schema) {
-		my $db_connection = __PACKAGE__->config->{'db_connection_string'};
-		my $db_username   = __PACKAGE__->config->{'db_username'};
-		my $db_password   = __PACKAGE__->config->{'db_password'};
-		$schema = Wardrobe::Model::Main->connect($db_connection, $db_username, $db_password);
-	}
-
-	return $schema;
-}
 
 # Start the application
 __PACKAGE__->setup();

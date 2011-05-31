@@ -1,7 +1,7 @@
 package Wardrobe::Controller::Clothes;
 use Moose;
 use namespace::autoclean;
-use Data::Dumper;
+use Wardrobe::Model::Clothing;
 
 BEGIN {extends 'Catalyst::Controller'; }
 
@@ -34,21 +34,15 @@ sub list :Path :Args(0) {
 	my %clothes_by_cat = ();
 	my %categories = ();
 	my @clothes = ();
-	my $qry = '';
+	my $search_qry = '';
 
 	$c->log->debug("method = $c->req->method");
 	if (lc $c->req->method eq 'post') {
-		$qry = $c->req->params->{"name_filter"};
-		$c->log->debug("filter: $qry.");
-		@clothes = Wardrobe->get_schema()->resultset('Clothing')->search(
-			{ 'name' => { 'ilike', '%' . $qry . '%' } },
-			{
-				'join'     => 'tagged_clothing',
-				'prefetch' => 'tagged_clothing'
-			}
-		);
+		$search_qry = $c->req->params->{"name_filter"};
+		$c->log->debug("search query: $search_qry.");
+		@clothes = Wardrobe::Model::Clothing->get_clothes_by_name($search_qry);
 	} else {
-		@clothes = Wardrobe->get_schema()->resultset('Clothing')->all();
+		@clothes = Wardrobe::Model::Clothing->get_all_clothes();
 	}
 	
 	$c->log->debug("There are " . scalar @clothes . " clothing items: " . join(@clothes,', '));
@@ -66,22 +60,19 @@ sub list :Path :Args(0) {
 		$result_count++;
 	}
 
-	$c->log->debug("There are " . scalar %categories . " items.");
-	$c->log->debug("qry = $qry");
-
 	$c->stash(
 		template    => 'clothes/list.tt',
 		clothes     => \%clothes_by_cat,
 		categories  => \%categories,
 		rs_count    => $result_count,
-		name_filter => $qry
+		name_filter => $search_qry
 	);
 }
 
 sub clothing :Chained('/') :PathPart('clothes/clothing') :Args(2) {
 	my ($self, $c, $clothing_id, $clothing_name) = @_;
 
-	my $item = Wardrobe->get_schema()->resultset('Clothing')->find($clothing_id);
+	my $item = Wardrobe::Model::Clothing->get_clothing_by_id($clothing_id);
 
 	$c->stash(
 		'template' => 'clothes/clothing.tt',

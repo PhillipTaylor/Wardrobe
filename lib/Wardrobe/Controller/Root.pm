@@ -2,7 +2,7 @@ package Wardrobe::Controller::Root;
 use Moose;
 use namespace::autoclean;
 use Text::CSV::Encoded;
-use Wardrobe::Model::Main;
+use Wardrobe::Model::Interface;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -61,7 +61,7 @@ sub csv_upload :Local {
 	$c->log->debug("upload: $upload->tempname");
 
 	# assume header record for website
-	(my $rows, my $bad, my $dupes) = Wardrobe::Model::Main->create_from_csv_file($upload->tempname, 1);
+	my ($rows, $bad, $dupes) = Wardrobe::Model::Interface->create_from_csv_file($upload->tempname, 1);
 
 	$c->stash(
 		template        => 'index.tt',

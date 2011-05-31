@@ -1,7 +1,8 @@
 package Wardrobe::Controller::Tags;
 use Moose;
 use namespace::autoclean;
-use Data::Dumper;
+
+use Wardrobe::Model::Outfit;
 
 BEGIN {extends 'Catalyst::Controller'; }
 
@@ -25,7 +26,7 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-	my @outfits = Wardrobe->get_schema()->resultset('Outfit')->all();
+	my @outfits = Wardrobe::Model::Outfit->get_all_outfits();
 
 	$c->stash(
 		"template" => 'tags/list.tt',
@@ -36,7 +37,7 @@ sub index :Path :Args(0) {
 sub tag :Chained('/') :PathPart('tags/tag') :Args(2) {
 	my ($self, $c, $outfit_id, $outfit_name) = @_;
 
-	my $outfit = Wardrobe->get_schema()->resultset('Outfit')->find($outfit_id);
+	my $outfit = Wardrobe::Model::Outfit->get_outfit_by_id($outfit_id);
 
 	$c->stash(
 		"template" => 'tags/tag.tt',
@@ -53,27 +54,10 @@ sub add :Local {
 	}
 	
 	my $clothing_id = $c->req->params->{"clothing_id"};
-	my $new_tag_name = $c->req->params->{"tag"};
+	my $outfit_name = $c->req->params->{"tag"};
 
-	# see if tag exists or needs to be created.
-	my $outfit = Wardrobe->get_schema()->resultset("Outfit")->search({
-		name => $new_tag_name
-	})->single;
-
-	$c->log->debug("Before: $outfit");
-
-	if (!defined($outfit)) {
-		# create outfit here.
-		$outfit = Wardrobe->get_schema()->resultset('Outfit')->create({
-			name => $new_tag_name
-		});
-	}
-
-	# add the clothes to the outfit.
-	Wardrobe->get_schema()->resultset('TaggedClothing')->create({
-		clothing_id => $clothing_id,
-		outfit_id   => $outfit->outfit_id
-	});
+	my $outfit = Wardrobe::Model::Outfit->create_outfit($outfit_name);
+	Wardrobe::Model::Outfit->tag_clothing_to_outfit($outfit->outfit_id, $clothing_id);
 
 	$c->res->redirect("/tags/tag/" . $outfit->outfit_id . "/" . $outfit->name);
 
