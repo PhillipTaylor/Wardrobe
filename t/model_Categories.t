@@ -3,6 +3,6 @@ use warnings;
 use Test::More;
 use Test::More;
 
-BEGIN { use_ok 'Wardrobe::View::json_version' }
+BEGIN { use_ok 'Wardrobe::Model::Categories' }
 
 done_testing();

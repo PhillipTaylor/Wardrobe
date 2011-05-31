@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Test::More;
 
-use Catalyst::Test 'wardrobe';
+use Catalyst::Test 'Wardrobe';
 
 ok( request('/')->is_success, 'Request should succeed' );
 

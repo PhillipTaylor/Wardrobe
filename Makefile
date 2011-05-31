@@ -1,4 +1,4 @@
-# This Makefile is for the wardrobe extension to perl.
+# This Makefile is for the Wardrobe extension to perl.
 #
 # It was generated automatically by MakeMaker version
 # 6.55_02 (Revision: 65502) from the contents of
@@ -14,14 +14,14 @@
 #     ABSTRACT => q[Catalyst based application]
 #     AUTHOR => q[PTaylor,,,]
 #     BUILD_REQUIRES => {  }
-#     DISTNAME => q[wardrobe]
-#     EXE_FILES => [q[script/wardrobe_cgi.pl], q[script/wardrobe_create.pl], q[script/wardrobe_fastcgi.pl], q[script/wardrobe_server.pl], q[script/wardrobe_test.pl]]
+#     DISTNAME => q[Wardrobe]
+#     EXE_FILES => [q[script/Wardrobe_cgi.pl], q[script/Wardrobe_create.pl], q[script/Wardrobe_fastcgi.pl], q[script/Wardrobe_server.pl], q[script/Wardrobe_test.pl]]
 #     LICENSE => q[perl]
-#     NAME => q[wardrobe]
+#     NAME => q[Wardrobe]
 #     NO_META => q[1]
 #     PREREQ_PM => { namespace::autoclean=>q[0], Catalyst::Plugin::Static::Simple=>q[0], Catalyst::Plugin::ConfigLoader=>q[0], ExtUtils::MakeMaker=>q[6.42], Catalyst::Action::RenderView=>q[0], Test::More=>q[0.88], Config::General=>q[0], Catalyst::Runtime=>q[5.80032], Moose=>q[0] }
 #     VERSION => q[0.01]
-#     VERSION_FROM => q[lib/wardrobe.pm]
+#     VERSION_FROM => q[lib/Wardrobe.pm]
 #     dist => { PREOP=>q[$(PERL) -I. "-MModule::Install::Admin" -e "dist_preop(q($(DISTVNAME)))"] }
 #     realclean => { FILES=>q[MYMETA.yml] }
 #     test => { TESTS=>q[t/01app.t t/02pod.t t/03podcoverage.t] }
@@ -61,8 +61,8 @@ VENDORLIBEXP = /usr/share/perl5
 AR_STATIC_ARGS = cr
 DIRFILESEP = /
 DFSEP = $(DIRFILESEP)
-NAME = wardrobe
-NAME_SYM = wardrobe
+NAME = Wardrobe
+NAME_SYM = Wardrobe
 VERSION = 0.01
 VERSION_MACRO = VERSION
 VERSION_SYM = 0_01
@@ -151,11 +151,11 @@ MM_REVISION = 65502
 # PARENT_NAME = NAME without BASEEXT and no trailing :: (eg Foo::Bar)
 # DLBASE  = Basename part of dynamic library. May be just equal BASEEXT.
 MAKE = make
-FULLEXT = wardrobe
-BASEEXT = wardrobe
+FULLEXT = Wardrobe
+BASEEXT = Wardrobe
 PARENT_NAME = 
 DLBASE = $(BASEEXT)
-VERSION_FROM = lib/wardrobe.pm
+VERSION_FROM = lib/Wardrobe.pm
 OBJECT = 
 LDFROM = $(OBJECT)
 LINKTYPE = dynamic
@@ -166,13 +166,13 @@ XS_FILES =
 C_FILES  = 
 O_FILES  = 
 H_FILES  = 
-MAN1PODS = script/wardrobe_cgi.pl \
-	script/wardrobe_create.pl \
-	script/wardrobe_fastcgi.pl \
-	script/wardrobe_server.pl \
-	script/wardrobe_test.pl
-MAN3PODS = lib/wardrobe.pm \
-	lib/wardrobe/Controller/Root.pm
+MAN1PODS = script/Wardrobe_cgi.pl \
+	script/Wardrobe_create.pl \
+	script/Wardrobe_fastcgi.pl \
+	script/Wardrobe_server.pl \
+	script/Wardrobe_test.pl
+MAN3PODS = lib/Wardrobe.pm \
+	lib/Wardrobe/Controller/Root.pm
 
 # Where is the Config information that we are using/depend on
 CONFIGDEP = $(PERL_ARCHLIB)$(DFSEP)Config.pm $(PERL_INC)$(DFSEP)config.h
@@ -194,13 +194,13 @@ PERL_ARCHIVE       =
 PERL_ARCHIVE_AFTER = 
 
 
-TO_INST_PM = lib/wardrobe.pm \
-	lib/wardrobe/Controller/Root.pm
+TO_INST_PM = lib/Wardrobe.pm \
+	lib/Wardrobe/Controller/Root.pm
 
-PM_TO_BLIB = lib/wardrobe.pm \
-	blib/lib/wardrobe.pm \
-	lib/wardrobe/Controller/Root.pm \
-	blib/lib/wardrobe/Controller/Root.pm
+PM_TO_BLIB = lib/Wardrobe.pm \
+	blib/lib/Wardrobe.pm \
+	lib/Wardrobe/Controller/Root.pm \
+	blib/lib/Wardrobe/Controller/Root.pm
 
 
 # --- MakeMaker platform_constants section:
@@ -268,8 +268,8 @@ CI = ci -u
 RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = tardist
-DISTNAME = wardrobe
-DISTVNAME = wardrobe-0.01
+DISTNAME = Wardrobe
+DISTVNAME = Wardrobe-0.01
 
 
 # --- MakeMaker macro section:
@@ -422,22 +422,22 @@ POD2MAN = $(POD2MAN_EXE)
 
 
 manifypods : pure_all  \
-	script/wardrobe_cgi.pl \
-	script/wardrobe_server.pl \
-	script/wardrobe_fastcgi.pl \
-	script/wardrobe_create.pl \
-	script/wardrobe_test.pl \
-	lib/wardrobe.pm \
-	lib/wardrobe/Controller/Root.pm
+	script/Wardrobe_cgi.pl \
+	script/Wardrobe_server.pl \
+	script/Wardrobe_fastcgi.pl \
+	script/Wardrobe_create.pl \
+	script/Wardrobe_test.pl \
+	lib/Wardrobe.pm \
+	lib/Wardrobe/Controller/Root.pm
 	$(NOECHO) $(POD2MAN) --section=$(MAN1EXT) --perm_rw=$(PERM_RW) \
-	  script/wardrobe_cgi.pl $(INST_MAN1DIR)/wardrobe_cgi.pl.$(MAN1EXT) \
-	  script/wardrobe_server.pl $(INST_MAN1DIR)/wardrobe_server.pl.$(MAN1EXT) \
-	  script/wardrobe_fastcgi.pl $(INST_MAN1DIR)/wardrobe_fastcgi.pl.$(MAN1EXT) \
-	  script/wardrobe_create.pl $(INST_MAN1DIR)/wardrobe_create.pl.$(MAN1EXT) \
-	  script/wardrobe_test.pl $(INST_MAN1DIR)/wardrobe_test.pl.$(MAN1EXT) 
+	  script/Wardrobe_cgi.pl $(INST_MAN1DIR)/Wardrobe_cgi.pl.$(MAN1EXT) \
+	  script/Wardrobe_server.pl $(INST_MAN1DIR)/Wardrobe_server.pl.$(MAN1EXT) \
+	  script/Wardrobe_fastcgi.pl $(INST_MAN1DIR)/Wardrobe_fastcgi.pl.$(MAN1EXT) \
+	  script/Wardrobe_create.pl $(INST_MAN1DIR)/Wardrobe_create.pl.$(MAN1EXT) \
+	  script/Wardrobe_test.pl $(INST_MAN1DIR)/Wardrobe_test.pl.$(MAN1EXT) 
 	$(NOECHO) $(POD2MAN) --section=$(MAN3EXT) --perm_rw=$(PERM_RW) \
-	  lib/wardrobe.pm $(INST_MAN3DIR)/wardrobe.$(MAN3EXT) \
-	  lib/wardrobe/Controller/Root.pm $(INST_MAN3DIR)/wardrobe::Controller::Root.$(MAN3EXT) 
+	  lib/Wardrobe.pm $(INST_MAN3DIR)/Wardrobe.$(MAN3EXT) \
+	  lib/Wardrobe/Controller/Root.pm $(INST_MAN3DIR)/Wardrobe::Controller::Root.$(MAN3EXT) 
 
 
 
@@ -447,46 +447,46 @@ manifypods : pure_all  \
 
 # --- MakeMaker installbin section:
 
-EXE_FILES = script/wardrobe_cgi.pl script/wardrobe_create.pl script/wardrobe_fastcgi.pl script/wardrobe_server.pl script/wardrobe_test.pl
+EXE_FILES = script/Wardrobe_cgi.pl script/Wardrobe_create.pl script/Wardrobe_fastcgi.pl script/Wardrobe_server.pl script/Wardrobe_test.pl
 
-pure_all :: $(INST_SCRIPT)/wardrobe_cgi.pl $(INST_SCRIPT)/wardrobe_server.pl $(INST_SCRIPT)/wardrobe_fastcgi.pl $(INST_SCRIPT)/wardrobe_create.pl $(INST_SCRIPT)/wardrobe_test.pl
+pure_all :: $(INST_SCRIPT)/Wardrobe_cgi.pl $(INST_SCRIPT)/Wardrobe_server.pl $(INST_SCRIPT)/Wardrobe_fastcgi.pl $(INST_SCRIPT)/Wardrobe_create.pl $(INST_SCRIPT)/Wardrobe_test.pl
 	$(NOECHO) $(NOOP)
 
 realclean ::
 	$(RM_F) \
-	  $(INST_SCRIPT)/wardrobe_cgi.pl $(INST_SCRIPT)/wardrobe_server.pl \
-	  $(INST_SCRIPT)/wardrobe_fastcgi.pl $(INST_SCRIPT)/wardrobe_create.pl \
-	  $(INST_SCRIPT)/wardrobe_test.pl 
+	  $(INST_SCRIPT)/Wardrobe_cgi.pl $(INST_SCRIPT)/Wardrobe_server.pl \
+	  $(INST_SCRIPT)/Wardrobe_fastcgi.pl $(INST_SCRIPT)/Wardrobe_create.pl \
+	  $(INST_SCRIPT)/Wardrobe_test.pl 
 
-$(INST_SCRIPT)/wardrobe_cgi.pl : script/wardrobe_cgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/wardrobe_cgi.pl
-	$(CP) script/wardrobe_cgi.pl $(INST_SCRIPT)/wardrobe_cgi.pl
-	$(FIXIN) $(INST_SCRIPT)/wardrobe_cgi.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/wardrobe_cgi.pl
+$(INST_SCRIPT)/Wardrobe_cgi.pl : script/Wardrobe_cgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
+	$(NOECHO) $(RM_F) $(INST_SCRIPT)/Wardrobe_cgi.pl
+	$(CP) script/Wardrobe_cgi.pl $(INST_SCRIPT)/Wardrobe_cgi.pl
+	$(FIXIN) $(INST_SCRIPT)/Wardrobe_cgi.pl
+	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/Wardrobe_cgi.pl
 
-$(INST_SCRIPT)/wardrobe_server.pl : script/wardrobe_server.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/wardrobe_server.pl
-	$(CP) script/wardrobe_server.pl $(INST_SCRIPT)/wardrobe_server.pl
-	$(FIXIN) $(INST_SCRIPT)/wardrobe_server.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/wardrobe_server.pl
+$(INST_SCRIPT)/Wardrobe_server.pl : script/Wardrobe_server.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
+	$(NOECHO) $(RM_F) $(INST_SCRIPT)/Wardrobe_server.pl
+	$(CP) script/Wardrobe_server.pl $(INST_SCRIPT)/Wardrobe_server.pl
+	$(FIXIN) $(INST_SCRIPT)/Wardrobe_server.pl
+	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/Wardrobe_server.pl
 
-$(INST_SCRIPT)/wardrobe_fastcgi.pl : script/wardrobe_fastcgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/wardrobe_fastcgi.pl
-	$(CP) script/wardrobe_fastcgi.pl $(INST_SCRIPT)/wardrobe_fastcgi.pl
-	$(FIXIN) $(INST_SCRIPT)/wardrobe_fastcgi.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/wardrobe_fastcgi.pl
+$(INST_SCRIPT)/Wardrobe_fastcgi.pl : script/Wardrobe_fastcgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
+	$(NOECHO) $(RM_F) $(INST_SCRIPT)/Wardrobe_fastcgi.pl
+	$(CP) script/Wardrobe_fastcgi.pl $(INST_SCRIPT)/Wardrobe_fastcgi.pl
+	$(FIXIN) $(INST_SCRIPT)/Wardrobe_fastcgi.pl
+	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/Wardrobe_fastcgi.pl
 
-$(INST_SCRIPT)/wardrobe_create.pl : script/wardrobe_create.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/wardrobe_create.pl
-	$(CP) script/wardrobe_create.pl $(INST_SCRIPT)/wardrobe_create.pl
-	$(FIXIN) $(INST_SCRIPT)/wardrobe_create.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/wardrobe_create.pl
+$(INST_SCRIPT)/Wardrobe_create.pl : script/Wardrobe_create.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
+	$(NOECHO) $(RM_F) $(INST_SCRIPT)/Wardrobe_create.pl
+	$(CP) script/Wardrobe_create.pl $(INST_SCRIPT)/Wardrobe_create.pl
+	$(FIXIN) $(INST_SCRIPT)/Wardrobe_create.pl
+	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/Wardrobe_create.pl
 
-$(INST_SCRIPT)/wardrobe_test.pl : script/wardrobe_test.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/wardrobe_test.pl
-	$(CP) script/wardrobe_test.pl $(INST_SCRIPT)/wardrobe_test.pl
-	$(FIXIN) $(INST_SCRIPT)/wardrobe_test.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/wardrobe_test.pl
+$(INST_SCRIPT)/Wardrobe_test.pl : script/Wardrobe_test.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
+	$(NOECHO) $(RM_F) $(INST_SCRIPT)/Wardrobe_test.pl
+	$(CP) script/Wardrobe_test.pl $(INST_SCRIPT)/Wardrobe_test.pl
+	$(FIXIN) $(INST_SCRIPT)/Wardrobe_test.pl
+	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/Wardrobe_test.pl
 
 
 
@@ -832,8 +832,8 @@ ppd :
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
-	  lib/wardrobe.pm blib/lib/wardrobe.pm \
-	  lib/wardrobe/Controller/Root.pm blib/lib/wardrobe/Controller/Root.pm 
+	  lib/Wardrobe.pm blib/lib/Wardrobe.pm \
+	  lib/Wardrobe/Controller/Root.pm blib/lib/Wardrobe/Controller/Root.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 
@@ -865,7 +865,7 @@ distsign ::
 	cpansign -s
 
 catalyst_par :: all
-	$(NOECHO) $(PERL) -Ilib -Minc::Module::Install -MModule::Install::Catalyst -e"Catalyst::Module::Install::_catalyst_par( '', 'wardrobe', { CLASSES => [], PAROPTS =>  {}, ENGINE => 'CGI', SCRIPT => '', USAGE => q## } )"
+	$(NOECHO) $(PERL) -Ilib -Minc::Module::Install -MModule::Install::Catalyst -e"Catalyst::Module::Install::_catalyst_par( '', 'Wardrobe', { CLASSES => [], PAROPTS =>  {}, ENGINE => 'CGI', SCRIPT => '', USAGE => q## } )"
 # --- Module::Install::AutoInstall section:
 
 config :: installdeps

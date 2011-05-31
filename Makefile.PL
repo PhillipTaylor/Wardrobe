@@ -6,8 +6,8 @@ use Module::Install::Catalyst; # Complain loudly if you don't have
                                # Catalyst::Devel installed or haven't said
                                # 'make dist' to create a standalone tarball.
 
-name 'wardrobe';
-all_from 'lib/wardrobe.pm';
+name 'Wardrobe';
+all_from 'lib/Wardrobe.pm';
 
 requires 'Catalyst::Runtime' => '5.80032';
 requires 'Catalyst::Plugin::ConfigLoader';

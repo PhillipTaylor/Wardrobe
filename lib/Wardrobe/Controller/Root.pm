@@ -73,6 +73,13 @@ sub csv_upload :Local {
 
 }
 
+sub json_index :Local {
+	my ($self, $c) = @_;
+
+	$c->forward('index');
+	$c->stash->{current_view} = 'Service';
+}
+
 =head2 end
 
 Attempt to render a view, if needed.
