@@ -42,6 +42,30 @@ __PACKAGE__->log($logger);
 __PACKAGE__->setup();
 
 
+# Intercept all requests before they are dispatched to the
+# appropriate handler. Incept requests to /json/ use it as a
+# flag to switch the view. Then remove it from the URI so
+# dispatch goes where it originally would have done.
+sub prepare_path {
+	my $c = shift;
+
+	$c->SUPER::prepare_path(@_);
+	my $path = $c->request->path;
+	$c->log->info("PATH: $path");
+
+	if ($path =~ /^json\/.*$/) {
+		$c->log->info("Switching Output to JSON");
+
+		$path =~ s/^json\///g;
+
+		$c->log->info("Path " . $c->request->path . " rewritten to $path");
+
+		$c->request->path($path);
+		$c->stash->{current_view} = 'JSON';
+	}
+}
+
+
 =head1 NAME
 
 Wardrobe - Catalyst based application

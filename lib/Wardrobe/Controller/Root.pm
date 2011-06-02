@@ -58,8 +58,6 @@ sub csv_upload :Local {
 	my @results = ();
 	my $upload = $c->req->upload('csv_file');
 
-	$c->log->debug("upload: $upload->tempname");
-
 	# assume header record for website
 	my ($rows, $bad, $dupes) = Wardrobe::Model::Interface->create_from_csv_file($upload->tempname, 1);
 
@@ -73,20 +71,20 @@ sub csv_upload :Local {
 
 }
 
-sub json_index :Local {
-	my ($self, $c) = @_;
-
-	$c->forward('index');
-	$c->stash->{current_view} = 'Service';
-}
-
 =head2 end
 
 Attempt to render a view, if needed.
 
 =cut
 
-sub end : ActionClass('RenderView') {}
+sub end : ActionClass('RenderView') {
+	my ($self, $c) = @_;
+
+	# URI's ending with .json served up as JSON
+	if ($c->request->path =~ /.json$/) {
+		$c->stash->{current_view} = 'JSON';
+	}
+}
 
 =head1 AUTHOR
 
