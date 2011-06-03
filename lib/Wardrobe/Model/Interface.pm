@@ -58,9 +58,7 @@ sub create_from_csv_file {
 				(my $clothing_name, my $category_name) = $parser->fields();
 				my $added = create_clothing_and_category($clothing_name, $category_name);
 
-				if (!$added) {
-					$dupes++;
-				}
+				$dupes++ unless $added;
 			}
 		}
 
@@ -70,9 +68,7 @@ sub create_from_csv_file {
 	close $fh;
 
 	# ensure record count is accurate.
-	if ($header_record) {
-		$line_no--;
-	}
+	$line_no-- unless !$header_record;
 
 	return ($line_no, $bad, $dupes);
 }
