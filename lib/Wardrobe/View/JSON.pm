@@ -7,9 +7,12 @@ use JSON::XS ();
 
 sub encode_json {
 	my($self, $c, $data) = @_;
+
 	my $encoder = JSON::XS->new->ascii->pretty->allow_nonref;
+
 	$encoder->allow_blessed(1);
 	$encoder->convert_blessed(1);
+	
 	$encoder->encode($data);
 }
 
