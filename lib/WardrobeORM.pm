@@ -3,7 +3,7 @@ package WardrobeORM;
 use base qw/DBIx::Class::Schema/;
 use Wardrobe;
 use Text::CSV::Encoded;
-__PACKAGE__->load_namespaces;
+__PACKAGE__->load_namespaces();
 
 # singleton for accessing the DBIx Schema.
 our $schema = undef;

@@ -37,8 +37,6 @@ sub create_from_csv_file {
 		allow_whitespace => 1
 	});
 
-	#Wardrobe->log->info("loading in new data from $csv_filename");
-
 	open my $fh, "<", $csv_filename;
 
 	my $line_no   = 0;
@@ -48,7 +46,6 @@ sub create_from_csv_file {
 	foreach my $line (<$fh>) {
 		
 		if (!$parser->parse($line)) {
-			#Wardrobe->log->warn("Skipped line $line_no - broken");
 			$bad++;
 		} else {
 
@@ -77,7 +74,6 @@ sub create_from_csv_file {
 sub create_clothing_and_category {
 	my ($clothing_name, $category_name) = @_;
 	
-	#Wardrobe->log->debug("Parsed: Clothing Name: $clothing_name| Category Name: $category_name");
 	my $clothing_rs = WardrobeORM->get_schema()->resultset('Clothing');
 	return $clothing_rs->create_with_category($clothing_name, $category_name);
 
