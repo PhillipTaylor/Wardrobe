@@ -8,32 +8,29 @@ extends 'Catalyst::Model';
 sub get_clothes_by_category {
 	my ($self, $category_id) = @_;
 
-	return WardrobeORM->get_schema()->resultset('Clothing')->search({
-		'category_id' => $category_id
-	});
+	my $clothing_rs = WardrobeORM->get_schema()->resultset('Clothing');
+	return $clothing_rs->search_by_category($category_id);
 }
 
 sub get_all_clothes {
-	return WardrobeORM->get_schema()->resultset('Clothing')->all();
+	my $clothing_rs = WardrobeORM->get_schema()->resultset('Clothing');
+	return $clothing_rs->all();
 }
 
 sub get_clothes_by_name {
 	my ($self, $search_qry) = @_;
 
-	return WardrobeORM->get_schema()->resultset('Clothing')->search(
-		{ 'name' => { 'ilike', '%' . $search_qry . '%' } },
-		{
-			'join'     => 'tagged_clothing',
-			'prefetch' => 'tagged_clothing'
-		}
-	);
+	my $clothing_rs = WardrobeORM->get_schema()->resultset('Clothing');
+	return $clothing_rs->search_by_name_query($search_qry);
 
 }
 
 sub get_clothing_by_id {
 	my ($self, $clothing_id) = @_;
 
-	return WardrobeORM->get_schema()->resultset('Clothing')->find($clothing_id);
+	my $clothing_rs = WardrobeORM->get_schema()->resultset('Clothing');
+	return $clothing_rs->find_by_id($clothing_id);
+
 }
 
 

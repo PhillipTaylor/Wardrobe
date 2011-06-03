@@ -2,6 +2,7 @@ package Wardrobe::Model::Interface;
 use Moose;
 use namespace::autoclean;
 use WardrobeORM;
+use WardrobeORM::ResultSet::Clothing;
 
 extends 'Catalyst::Model';
 
@@ -56,9 +57,9 @@ sub create_from_csv_file {
 				next;
 			} else {
 				(my $clothing_name, my $category_name) = $parser->fields();
-				my $added = create_clothing_and_category($clothing_name, $category_name);
+				my $is_new = create_clothing_and_category($clothing_name, $category_name);
 
-				$dupes++ unless $added;
+				$dupes++ unless $is_new;
 			}
 		}
 
@@ -75,26 +76,11 @@ sub create_from_csv_file {
 
 sub create_clothing_and_category {
 	my ($clothing_name, $category_name) = @_;
+	
 	#Wardrobe->log->debug("Parsed: Clothing Name: $clothing_name| Category Name: $category_name");
+	my $clothing_rs = WardrobeORM->get_schema()->resultset('Clothing');
+	return $clothing_rs->create_with_category($clothing_name, $category_name);
 
-	my $clothing_item = WardrobeORM->get_schema()->resultset('Clothing')->search({
-		name => $clothing_name
-	})->single;
-
-	if ($clothing_item) {
-	#	Wardrobe->log->warn('Existing clothing item found. skipped');
-		return 0;
-	}
-
-	my $category = Category->find_or_create_category($category_name);
-
-	#Wardrobe->log->info("creating new clothing: $clothing_name (category already exists: $category->in_storage)");
-	$clothing_item = WardrobeORM->get_schema()->resultset('Clothing')->create({
-		name => $clothing_name,
-		category => $category
-	});
-
-	return 1;
 }
 
 __PACKAGE__->meta->make_immutable;

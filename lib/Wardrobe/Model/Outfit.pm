@@ -6,31 +6,26 @@ use WardrobeORM;
 extends 'Catalyst::Model';
 
 sub get_all_outfits {
-	return WardrobeORM->get_schema()->resultset('Outfit')->all();
+
+	my $outfit_rs = WardrobeORM->get_schema()->resultset("Outfit");
+	return $outfit_rs->all();
+
 }
 
 sub get_outfit_by_id {
 	my ($self, $outfit_id) = @_;
 
-	return WardrobeORM->get_schema()->resultset('Outfit')->find($outfit_id);
+	my $outfit_rs = WardrobeORM->get_schema()->resultset("Outfit");
+	return $outfit_rs->find_by_id($outfit_id);
+
 }
 
 # create_outfit( clothing_name );
-sub create_outfit {
+sub find_or_create_outfit {
 	my ($self, $outfit_name, $clothing_id) = @_;
 
-	my $outfit = WardrobeORM->get_schema()->resultset("Outfit")->search({
-		name => $outfit_name
-	})->single;
-
-	if (!defined($outfit)) {
-		# create outfit here.
-		$outfit = WardrobeORM->get_schema()->resultset('Outfit')->create({
-			name => $outfit_name
-		});
-	}
-
-	return $outfit;
+	my $outfit_rs = WardrobeORM->get_schema()->resultset("Outfit");
+	return $outfit_rs->find_or_create_by_name($outfit_name);
 
 }
 

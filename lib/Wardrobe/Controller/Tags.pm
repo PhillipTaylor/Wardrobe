@@ -56,7 +56,7 @@ sub add :Local {
 	my $clothing_id = $c->req->params->{"clothing_id"};
 	my $outfit_name = $c->req->params->{"tag"};
 
-	my $outfit = Wardrobe::Model::Outfit->create_outfit($outfit_name);
+	my $outfit = Wardrobe::Model::Outfit->find_or_create_outfit($outfit_name);
 	Wardrobe::Model::Outfit->tag_clothing_to_outfit($outfit->outfit_id, $clothing_id);
 
 	$c->res->redirect("/tags/tag/" . $outfit->outfit_id . "/" . $outfit->name);

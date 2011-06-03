@@ -6,16 +6,9 @@ use WardrobeORM;
 extends 'Catalyst::Model';
 
 sub get_all_categories {
-	return WardrobeORM->get_schema()->resultset('Category')->all();
-}
 
-sub find_or_create_category {
-	my ($self, $category_name) = @_;
-
-	return WardrobeORM->get_schema()->resultset('Category')->find_or_create({
-		name => $category_name
-	}, { key => 'category_name' });
-
+	my $category_rs = WardrobeORM->get_schema()->resultset('Category');
+	return $category_rs->all();
 }
 
 =head1 NAME
