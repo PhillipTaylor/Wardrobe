@@ -22,14 +22,15 @@ Catalyst Controller.
 
 =cut
 
-sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
-
-	$self->list($c);
+sub clo_root :Chained('/root') :PathPart('clothes') :CaptureArgs(0) {
+	my ($self, $c) = @_;
+	
+	my $breadcrumbs = $c->stash->{'breadcrumb'};
+	$breadcrumbs->push('clothes', 'clothes');
 }
 
-sub list :Path :Args(0) {
-	my ( $self, $c ) = @_;
+sub index :Chained('clo_root') :PathPart('') :Args(0) {
+    my ( $self, $c ) = @_;
 
 	my %clothes_by_cat = ();
 	my %categories = ();
@@ -69,10 +70,13 @@ sub list :Path :Args(0) {
 	);
 }
 
-sub clothing :Chained('/') :PathPart('clothes/clothing') :Args(2) {
+sub clothing :Chained('clo_root') :PathPart('clothing') :Args(2) {
 	my ($self, $c, $clothing_id, $clothing_name) = @_;
 
 	my $item = Wardrobe::Model::Clothing->get_clothing_by_id($clothing_id);
+
+	my $breadcrumbs = $c->stash->{'breadcrumb'};
+	$breadcrumbs->push('clothing', "clothing/$clothing_id/$clothing_name");
 
 	$c->stash(
 		'template' => 'clothes/clothing.tt',

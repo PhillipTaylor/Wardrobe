@@ -3,27 +3,11 @@ use Moose;
 use namespace::autoclean;
 use WardrobeORM;
 use WardrobeORM::ResultSet::Clothing;
+use Log::Log4perl qw(get_logger);
 
 extends 'Catalyst::Model';
 
-=head1 NAME
-
-Wardrobe::Model::Wardrobe - Catalyst Model
-
-=head1 DESCRIPTION
-
-Catalyst Model.
-
-=head1 AUTHOR
-
-PTaylor,,,
-
-=head1 LICENSE
-
-This library is free software. You can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=cut
+my $log = Log::Log4perl->get_logger();
 
 # create_from_csv_file (str filename, bool header_record);
 sub create_from_csv_file {
@@ -44,19 +28,28 @@ sub create_from_csv_file {
 	my $dupes     = 0;
 
 	foreach my $line (<$fh>) {
-		
+		chomp($line);
+
 		if (!$parser->parse($line)) {
 			$bad++;
+			$log->debug("LINE: $line - BAD");
 		} else {
 
 			if ($line_no == 0 && $header_record) {
 				$line_no++;
+				$log->debug("LINE: $line - HEADER RECORD");
 				next;
 			} else {
 				(my $clothing_name, my $category_name) = $parser->fields();
 				my $is_new = create_clothing_and_category($clothing_name, $category_name);
 
-				$dupes++ unless $is_new;
+				if ($is_new) {
+					$log->debug("LINE: $line - ADDED");
+				} else {
+					$log->debug("LINE: $line - DUPE");
+					$dupes++;
+				}
+
 			}
 		}
 

@@ -24,14 +24,15 @@ Catalyst Controller.
 
 =cut
 
-sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
-
-	#default action is to list categories
-	$self->list($c);
+sub cat_root :Chained('/root') :PathPart('categories') :CaptureArgs(0) {
+	my ($self, $c) = @_;
+	
+	my $breadcrumbs = $c->stash->{'breadcrumb'};
+	$breadcrumbs->push('categories', 'categories');
+	
 }
 
-sub list :Local {
+sub index :Chained('cat_root') :PathPart('') :Args(0) {
 	my ($self, $c) = @_;
 
 	my @categories = Wardrobe::Model::Categories->get_all_categories();
@@ -42,12 +43,16 @@ sub list :Local {
 		template   => 'categories/list.tt',
 		categories => \@categories
 	);
+
 }
 
-sub category :Chained('/') :PathPart('categories/category') :Args(2) {
+sub category :Chained('cat_root') :PathPart('category') :Args(2) {
 	my ($self, $c, $category_id, $category_name) = @_;
 
 	my @clothes = Wardrobe::Model::Clothing->get_clothes_by_category($category_id);
+
+	my $breadcrumb = $c->stash->{'breadcrumb'};
+	$breadcrumb->push('category',"category/$category_id/$category_name");
 
 	$c->stash(
 		template      => 'categories/category.tt',

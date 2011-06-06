@@ -13,6 +13,12 @@
 				<a href="/categories/">Categories</a>&nbsp;
 				<a href="/tags/">Tags</a>
 			</h2>
+			<h3><span>Drilldown Menu: [</span>
+				[% FOREACH bc = breadcrumb.breadcrumbs -%]
+					<span>>><a href="[% bc.href %]">[% bc.name %]</a></span>
+				[% END %]
+				&nbsp;&nbsp;]&nbsp;<span><a href="[% breadcrumb.get_parent.href %]">Up one level</a></span>
+			</h3>
 		</div>
 		<div>
 			[% content %]

@@ -3,6 +3,7 @@ use Moose;
 use namespace::autoclean;
 use Text::CSV::Encoded;
 use Wardrobe::Model::Interface;
+use Breadcrumbs;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -28,15 +29,22 @@ The root page (/)
 
 =cut
 
-sub index :Path :Args(0) {
+sub root :Chained('/') :PathPart('') :CaptureArgs(0) {
+	my ($self, $c) = @_;
+
+	my $breadcrumbs = Breadcrumbs->new();
+	$c->stash->{'breadcrumb'} = $breadcrumbs;
+
+	$breadcrumbs->push('home', '');
+
+	$c->log->debug('breadcrumb set: ' . $breadcrumbs->get_depth() );
+}
+
+sub index :Chained('root') :PathPart('') :Args(0) {
     my ( $self, $c ) = @_;
 
-#	my $upload_count = $c->req->params{"upload_count"};
-
-    # Hello World
     $c->stash(
 		template        => 'index.tt',
-		upload_complete => 0
 	);
 }
 
@@ -46,14 +54,16 @@ Standard 404 error page
 
 =cut
 
-sub default :Path {
+sub default :Chained('root') :Args(0) {
     my ( $self, $c ) = @_;
     $c->response->body( 'Page not found' );
     $c->response->status(404);
 }
 
-sub csv_upload :Local {
+sub csv_upload :Chained('root') :Args(0) {
 	my ( $self, $c) = @_;
+	
+	$c->log->debug('breadcrumb later = ' . join(', ', keys %{ $c->stash }));
 
 	my @results = ();
 	my $upload = $c->req->upload('csv_file');

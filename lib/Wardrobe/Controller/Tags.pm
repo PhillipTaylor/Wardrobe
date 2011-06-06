@@ -23,7 +23,14 @@ Catalyst Controller.
 
 =cut
 
-sub index :Path :Args(0) {
+sub tag_root :Chained('/root') :PathPart('tags') :CaptureArgs(0) {
+	my ($self, $c) = @_;
+	
+	my $breadcrumbs = $c->stash->{'breadcrumb'};
+	$breadcrumbs->push('tags', 'tags');
+}
+
+sub index :Chained('tag_root') :PathPart('') :Args(0) {
     my ( $self, $c ) = @_;
 
 	my @outfits = Wardrobe::Model::Outfit->get_all_outfits();
@@ -34,10 +41,13 @@ sub index :Path :Args(0) {
 	);
 }
 
-sub tag :Chained('/') :PathPart('tags/tag') :Args(2) {
+sub tag :Chained('tag_root') :PathPart('tag') :Args(2) {
 	my ($self, $c, $outfit_id, $outfit_name) = @_;
 
 	my $outfit = Wardrobe::Model::Outfit->get_outfit_by_id($outfit_id);
+
+	my $breadcrumbs = $c->stash->{'breadcrumb'};
+	$breadcrumbs->push('tag', "tag/$outfit_id/$outfit_name");
 
 	$c->stash(
 		"template" => 'tags/tag.tt',
@@ -45,7 +55,7 @@ sub tag :Chained('/') :PathPart('tags/tag') :Args(2) {
 	);
 }
 
-sub add :Local {
+sub add :Chained('tag_root') :PathPart('add') :Args(0) {
 	my ( $self, $c ) = @_;
 
 	if (lc $c->req->method ne 'post') {

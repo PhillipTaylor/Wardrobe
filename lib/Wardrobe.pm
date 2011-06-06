@@ -35,7 +35,6 @@ our $VERSION = '0.01';
 __PACKAGE__->config('Plugin::ConfigLoader' => { file => 'Wardrobe.conf'});
 
 our $logger = Catalyst::Log::Log4perl->new();
-#Util->set_logger($logger);
 __PACKAGE__->log($logger);
 
 # Start the application
