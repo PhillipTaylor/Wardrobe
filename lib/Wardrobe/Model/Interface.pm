@@ -30,6 +30,7 @@ sub create_from_csv_file {
 
 	while (my $raw_line = $parser->getline($fh)) {
 		my $line = $parser->string($raw_line);
+		chomp($line);
 
 		if (!$parser->parse($line)) {
 			$bad++;
@@ -41,15 +42,22 @@ sub create_from_csv_file {
 				$log->debug("LINE: $line - HEADER RECORD");
 				next;
 			} else {
-				(my $clothing_name, my $category_name) = $parser->fields($line);
+				my @cols = $parser->fields($line);
 
-				if ($clothing_name eq ''
-				||  $category_name eq ''
-				||  !defined($clothing_name)
-				||  !defined($category_name)) {
-						$bad++;
-						$log->debug("LINE: $line - MISSING FIELDS");
-						next;
+				if (@cols < 2) {
+					$bad++;
+					$line_no++;
+					$log->debug("LINE: $line - MISSING FIELDS");
+					next;
+				}
+
+				(my $clothing_name, my $category_name) = @cols;
+
+				if ($clothing_name eq '' || $category_name eq '') {
+					$bad++;
+					$line_no++;
+					$log->debug("LINE: $line - EMPTY STRING FIELD");
+					next;
 				}
 
 				my $is_new = create_clothing_and_category($clothing_name, $category_name);

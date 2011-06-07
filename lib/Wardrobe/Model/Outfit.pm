@@ -33,11 +33,12 @@ sub tag_clothing_to_outfit {
 	my ($self, $outfit_id, $clothing_id) = @_;
 
 	# add the clothes to the outfit.
-	WardrobeORM->get_schema()->resultset('TaggedClothing')->create({
+	my $tagged_clothing = WardrobeORM->get_schema()->resultset('TaggedClothing')->find_or_create({
 		clothing_id => $clothing_id,
 		outfit_id   => $outfit_id
 	});
 
+	return $tagged_clothing;
 }
 
 =head1 NAME
