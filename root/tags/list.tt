@@ -9,7 +9,7 @@
 			List of available outfits
 			<ul>
 			[% FOREACH outfit = outfits -%]
-				<li><a href="/tags/tag/[% outfit.outfit_id %]/[% outfit.name %]">[% outfit.name %]</a></li>
+				<li><a href="/tags/tag/[% outfit.outfit_id %]/[% outfit.name FILTER remove('/') | url %]">[% outfit.name | html %]</a></li>
 			[% END %]
 			</ul>
 		[% ELSE %]

@@ -69,7 +69,9 @@ sub add :Chained('tag_root') :PathPart('add') :Args(0) {
 	my $outfit = Wardrobe::Model::Outfit->find_or_create_outfit($outfit_name);
 	Wardrobe::Model::Outfit->tag_clothing_to_outfit($outfit->outfit_id, $clothing_id);
 
-	$c->res->redirect("/tags/tag/" . $outfit->outfit_id . "/" . $outfit->name);
+	my $fwd_url_part = $outfit->name;
+	$fwd_url_part =~ s/\///g;
+	$c->res->redirect("/tags/tag/" . $outfit->outfit_id . "/" . $fwd_url_part);
 
 }
 

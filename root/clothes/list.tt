@@ -18,7 +18,7 @@
 	<p>
 		<p>
 			[% IF (name_filter != "") %]
-				<b>[% rs_count %] results for search term [% name_filter %]
+				<b>[% rs_count %] results for search term [% name_filter | html %]
 			[% END %]
 		</p>
 		[% FOREACH category IN clothes -%]
@@ -26,18 +26,18 @@
 			[% category_name  = categories.$category_id %]
 			[% clothing_items = category.value %]
 
-			<b><a href="/categories/category/[% category_id %]/[% category_name %]">[% category_name %]</a></b>
+			<b><a href="/categories/category/[% category_id %]/[% category_name FILTER remove('/') | uri %]">[% category_name | html %]</a></b>
 			<ul>
 			[% FOREACH clothing_item = clothing_items -%]
 					<li>
-						<a href="/clothes/clothing/[% clothing_item.clothing_id %]/[% clothing_item.name %]">[% clothing_item.name %]</a>
+						<a href="/clothes/clothing/[% clothing_item.clothing_id %]/[% clothing_item.name FILTER remove('/') | uri %]">[% clothing_item.name | html %]</a>
 						[% IF clothing_item.outfits.size %]
 							<span class="small">(
 							[% FOREACH outfit = clothing_item.outfits %]
 								[% IF loop.first %]
-									[% outfit.name %]
+									[% outfit.name | html%]
 								[% ELSE %]
-									,&nbsp;[% outfit.name %]
+									,&nbsp;[% outfit.name | html %]
 								[% END %]
 							[% END %]
 							)</span>

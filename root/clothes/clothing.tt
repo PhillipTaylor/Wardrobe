@@ -5,14 +5,14 @@
 
 <div class="content">
 	<p>
-		This item is in the category: [% item.category.name %]
+		This item is in the category: [% item.category.name | html %]
 	</p>
 	<p>
 		[% IF item.outfits.size %]
 			This item of clothing goes in the these tags
 			<ul>
 			[% FOREACH outfit = item.outfits -%]
-				<li><a href="/tags/tag/[% outfit.outfit_id %]/[% outfit.name %]">[% outfit.name %]</a></li>
+				<li><a href="/tags/tag/[% outfit.outfit_id %]/[% outfit.name FILTER remove('/') | url %]">[% outfit.name | html %]</a></li>
 			[% END %]
 			</ul>
 		[% ELSE %]

@@ -5,12 +5,12 @@
 
 <div class="content">
 	<p>
-		Clothing under the category: [% category_name %]
+		Clothing under the category: [% category_name | html %]
 	</p>
 	<table>
 		[% FOREACH clothing IN clothes -%]
 		<tr>
-			<td><a href="/clothes/clothing/[% clothing.id %]/[% clothing.name %]">[% clothing.name %]</td>
+			<td><a href="/clothes/clothing/[% clothing.id %]/[% clothing.name FILTER remove('/') | url %]">[% clothing.name | html %]</td>
 		</tr>
 		[% END -%]
 	</table>
