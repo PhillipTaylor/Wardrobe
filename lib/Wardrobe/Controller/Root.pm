@@ -1,7 +1,6 @@
 package Wardrobe::Controller::Root;
 use Moose;
 use namespace::autoclean;
-use Text::CSV::Encoded;
 use Wardrobe::Model::Interface;
 use Breadcrumbs;
 

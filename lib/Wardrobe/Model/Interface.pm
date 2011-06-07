@@ -3,6 +3,7 @@ use Moose;
 use namespace::autoclean;
 use WardrobeORM;
 use WardrobeORM::ResultSet::Clothing;
+use Text::CSV::Encoded;
 use Log::Log4perl qw(get_logger);
 
 extends 'Catalyst::Model';
@@ -27,8 +28,8 @@ sub create_from_csv_file {
 	my $bad       = 0;
 	my $dupes     = 0;
 
-	foreach my $line (<$fh>) {
-		chomp($line);
+	while (my $raw_line = $parser->getline($fh)) {
+		my $line = $parser->string($raw_line);
 
 		if (!$parser->parse($line)) {
 			$bad++;
@@ -40,7 +41,17 @@ sub create_from_csv_file {
 				$log->debug("LINE: $line - HEADER RECORD");
 				next;
 			} else {
-				(my $clothing_name, my $category_name) = $parser->fields();
+				(my $clothing_name, my $category_name) = $parser->fields($line);
+
+				if ($clothing_name eq ''
+				||  $category_name eq ''
+				||  !defined($clothing_name)
+				||  !defined($category_name)) {
+						$bad++;
+						$log->debug("LINE: $line - MISSING FIELDS");
+						next;
+				}
+
 				my $is_new = create_clothing_and_category($clothing_name, $category_name);
 
 				if ($is_new) {

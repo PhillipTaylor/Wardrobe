@@ -2,7 +2,15 @@
 package WardrobeORM::ResultSet::Base;
 use base qw/DBIx::Class::ResultSet/;
 
+use Log::Log4perl qw(get_logger);
+
 __PACKAGE__->load_components();
+
+our $logger = get_logger();
+
+sub log {
+	return $logger;
+}
 
 sub find_by_name {
 	my ($self, $name) = @_;
