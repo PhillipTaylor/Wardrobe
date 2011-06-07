@@ -9,7 +9,7 @@
 			The following items of clothing are in these tags.
 			<ul>
 			[% FOREACH clothing = outfit.clothes -%]
-				<li><a href="/clothes/clothing/[% clothing.clothing_id %]/[% clothing.name FILTER remove('/') | url %]">[% clothing.name | html %]</a></li>
+				<li><a href="[% c.uri_for(c.controller('Clothes').action_for('clothing'), clothing.clothing_id, clothing.name) %]">[% clothing.name | html %]</a></li>
 			[% END %]
 			</ul>
 		[% ELSE %]
