@@ -1,6 +1,6 @@
 
 package WardrobeORM::ResultSet::Category;
-use base WardrobeORM::ResultSet::Base;
+use base WardrobeORM::ResultSetBase;
 
 __PACKAGE__->load_components();
 

@@ -1,4 +1,4 @@
-package WardrobeORM::ResultSet::Base;
+package WardrobeORM::ResultSetBase;
 use base qw/DBIx::Class::ResultSet/;
 
 use Log::Log4perl qw(get_logger);
