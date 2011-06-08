@@ -10,7 +10,7 @@
 	<table>
 		[% FOREACH clothing IN clothes -%]
 		<tr>
-			<td><a href="[% c.uri_for(c.controller('Clothes').action_for('clothing'), clothing.id, clothing.name) %]">[% clothing.name | html %]</td>
+			<td><a href="[% c.uri_for(c.controller('Clothes').action_for('clothing'), clothing.id, cln(clothing.name)) %]">[% clothing.name | html %]</td>
 		</tr>
 		[% END -%]
 	</table>

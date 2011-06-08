@@ -26,11 +26,11 @@
 			[% category_name  = categories.$category_id %]
 			[% clothing_items = category.value %]
 
-			<b><a href="[% c.uri_for(c.controller('Categories').action_for('category') category_id, category_name) %]">[% category_name | html %]</a></b>
+			<b><a href="[% c.uri_for(c.controller('Categories').action_for('category') category_id, cln(category_name)) %]">[% category_name | html %]</a></b>
 			<ul>
 			[% FOREACH clothing_item = clothing_items -%]
 					<li>
-						<a href="[% c.uri_for('clothing', clothing_item.id, clothing_item.name) %]">[% clothing_item.name | html %]</a>
+						<a href="[% c.uri_for('clothing', clothing_item.id, cln(clothing_item.name)) %]">[% clothing_item.name | html %]</a>
 						[% IF clothing_item.outfits.size %]
 							<span class="small">(
 							[% FOREACH outfit = clothing_item.outfits %]

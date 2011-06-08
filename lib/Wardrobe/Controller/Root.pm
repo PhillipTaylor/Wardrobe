@@ -2,6 +2,7 @@ package Wardrobe::Controller::Root;
 use Moose;
 use namespace::autoclean;
 use Wardrobe::Model::Interface;
+use Wardrobe::TemplateUtil;
 use Breadcrumbs;
 
 BEGIN { extends 'Catalyst::Controller' }
@@ -31,12 +32,14 @@ The root page (/)
 sub root :Chained('/') :PathPart('') :CaptureArgs(0) {
 	my ($self, $c) = @_;
 
+	# register template util functions
+	Wardrobe::TemplateUtil->init($c);
+
 	my $breadcrumbs = Breadcrumbs->new();
 	$c->stash->{'breadcrumb'} = $breadcrumbs;
-
 	$breadcrumbs->push('home', '');
-
 	$c->log->debug('breadcrumb set: ' . $breadcrumbs->get_depth() );
+
 }
 
 sub index :Chained('root') :PathPart('') :Args(0) {

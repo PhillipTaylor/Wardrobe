@@ -11,7 +11,7 @@
 	<table>
 		[% FOREACH category IN categories -%]
 		<tr>
-			<td><a href="[% c.uri_for('category', category.id, category.name) %]">[% category.name | url %]</a></td>
+			<td><a href="[% c.uri_for('category', category.id, cln(category.name)) %]">[% category.name | url %]</a></td>
 		</tr>
 		[% END -%]
 	</table>

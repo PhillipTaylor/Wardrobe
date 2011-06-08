@@ -12,7 +12,7 @@
 			This item of clothing goes in the these tags
 			<ul>
 			[% FOREACH outfit = item.outfits -%]
-				<li><a href="[% c.uri_for(c.controller('Tags').action_for('tag'), outfit.outfit_id, outfit.name) %]">[% outfit.name | html %]</a></li>
+				<li><a href="[% c.uri_for(c.controller('Tags').action_for('tag'), outfit.outfit_id, cln(outfit.name)) %]">[% outfit.name | html %]</a></li>
 			[% END %]
 			</ul>
 		[% ELSE %]
