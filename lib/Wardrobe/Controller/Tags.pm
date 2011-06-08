@@ -3,6 +3,7 @@ use Moose;
 use namespace::autoclean;
 
 use Wardrobe::Model::Outfit;
+use Wardrobe::TemplateUtil (qw/cln/);
 
 BEGIN {extends 'Catalyst::Controller'; }
 
@@ -66,12 +67,17 @@ sub add :Chained('tag_root') :PathPart('add') :Args(0) {
 	my $clothing_id = $c->req->params->{"clothing_id"};
 	my $outfit_name = $c->req->params->{"tag"};
 
+	if ($outfit_name eq '') {
+		$c->log->warn('User attempted to tag against an empty string');
+		$c->res->redirect($c->uri_for($c->controller('Clothes')->action_for('clothing'), $clothing_id, 'x'));
+		return;
+	}
+
 	my $outfit = Wardrobe::Model::Outfit->find_or_create_outfit($outfit_name);
 	Wardrobe::Model::Outfit->tag_clothing_to_outfit($outfit->outfit_id, $clothing_id);
 
-	my $fwd_url_part = $outfit->name;
-	$fwd_url_part =~ s/\///g;
-	$c->res->redirect("/tags/tag/" . $outfit->outfit_id . "/" . $fwd_url_part);
+	my $cln_name = Wardrobe::TemplateUtil::cln($outfit_name);
+	$c->res->redirect($c->uri_for('tag', $outfit->outfit_id, $cln_name));
 
 }
 

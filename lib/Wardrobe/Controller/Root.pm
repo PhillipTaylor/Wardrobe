@@ -70,6 +70,11 @@ sub csv_upload :Chained('root') :Args(0) {
 	my @results = ();
 	my $upload = $c->req->upload('csv_file');
 
+	if (!defined($upload)) {
+		$c->res->redirect($c->uri_for(''));
+		return;
+	}
+
 	# assume header record for website
 	my ($rows, $bad, $dupes) = Wardrobe::Model::Interface->create_from_csv_file($upload->tempname, 1);
 

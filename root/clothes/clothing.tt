@@ -3,6 +3,23 @@
 	title = "Clothing Item: $item.name"
 %]
 
+<script type="text/javascript">
+
+	function validateTag() {
+
+		var tag_name = document.getElementById('tag_name').value;
+
+		if (tag_name == undefined || tag_name == '') {
+			alert('Must provide a tag name', "Will not Tag");
+			return false;
+		}
+
+		return true;
+
+	}
+
+</script>
+
 <div class="content">
 	<p>
 		This item is in the category: [% item.category.name | html %]
@@ -21,9 +38,9 @@
 	</p>
 	<p>
 		Tag this item of clothing as part of an outfit.<br />
-		<form method="post" action="[% c.uri_for(c.controller('Tags').action_for('add')) %]">
+		<form method="post" action="[% c.uri_for(c.controller('Tags').action_for('add')) %]" onsubmit="return validateTag()">
 			<input type="hidden" name="clothing_id" value="[% item.clothing_id %]" />
-			<input type="text" name="tag" />
+			<input type="text" name="tag" id="tag_name" />
 			<input type="submit" value="Tag!" />
 		</form>
 	</p>
