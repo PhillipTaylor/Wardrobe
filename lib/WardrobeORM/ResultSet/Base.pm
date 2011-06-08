@@ -1,4 +1,3 @@
-
 package WardrobeORM::ResultSet::Base;
 use base qw/DBIx::Class::ResultSet/;
 

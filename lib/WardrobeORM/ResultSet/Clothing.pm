@@ -16,7 +16,7 @@ sub create_with_category {
 	my $is_new = 0;
 
 	if (!$clothing_item) {
-		my $category_rs = WardrobeORM->get_schema()->resultset('Category');
+		my $category_rs = WardrobeORM->resultset('Category');
 		my $category = $category_rs->find_or_create_by_name($category_name);
 
 		$self->create({
@@ -44,7 +44,7 @@ sub search_by_category {
 sub search_by_name_query {
 	my ($self, $search_qry) = @_;
 
-	$self->search({
+	return $self->search({
 			name => { 'ilike', '%' . $search_qry . '%' }
 		},
 		{

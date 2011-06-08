@@ -18,7 +18,7 @@
 	<p>
 		<p>
 			[% IF (name_filter != "") %]
-				<b>[% rs_count %] results for search term [% name_filter | html %]
+				<b>[% rs_count %] results for search term [% name_filter | html %]</b>
 			[% END %]
 		</p>
 		[% FOREACH category IN clothes -%]
@@ -35,7 +35,7 @@
 							<span class="small">(
 							[% FOREACH outfit = clothing_item.outfits %]
 								[% IF loop.first %]
-									[% outfit.name | html%]
+									[% outfit.name | html %]
 								[% ELSE %]
 									,&nbsp;[% outfit.name | html %]
 								[% END %]

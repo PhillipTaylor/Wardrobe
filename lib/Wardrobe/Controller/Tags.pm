@@ -34,7 +34,7 @@ sub tag_root :Chained('/root') :PathPart('tags') :CaptureArgs(0) {
 sub index :Chained('tag_root') :PathPart('') :Args(0) {
     my ( $self, $c ) = @_;
 
-	my @outfits = Wardrobe::Model::Outfit->get_all_outfits();
+	my @outfits = $c->model('Outfit')->get_all_outfits();
 
 	$c->stash(
 		"template" => 'tags/list.tt',
@@ -45,7 +45,7 @@ sub index :Chained('tag_root') :PathPart('') :Args(0) {
 sub tag :Chained('tag_root') :PathPart('tag') :Args(2) {
 	my ($self, $c, $outfit_id, $outfit_name) = @_;
 
-	my $outfit = Wardrobe::Model::Outfit->get_outfit_by_id($outfit_id);
+	my $outfit = $c->model('Outfit')->get_outfit_by_id($outfit_id);
 
 	my $breadcrumbs = $c->stash->{'breadcrumb'};
 	$breadcrumbs->push('tag', "tag/$outfit_id/$outfit_name");
@@ -73,8 +73,8 @@ sub add :Chained('tag_root') :PathPart('add') :Args(0) {
 		return;
 	}
 
-	my $outfit = Wardrobe::Model::Outfit->find_or_create_outfit($outfit_name);
-	Wardrobe::Model::Outfit->tag_clothing_to_outfit($outfit->outfit_id, $clothing_id);
+	my $outfit = $c->model('Outfit')->find_or_create_outfit($outfit_name);
+	$c->model('Outfit')->tag_clothing_to_outfit($outfit->outfit_id, $clothing_id);
 
 	my $cln_name = Wardrobe::TemplateUtil::cln($outfit_name);
 	$c->res->redirect($c->uri_for('tag', $outfit->outfit_id, $cln_name));

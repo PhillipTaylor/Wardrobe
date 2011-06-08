@@ -26,14 +26,4 @@ __PACKAGE__->many_to_many('outfits', 'tagged_clothing', 'outfit');
 
 #__PACKAGE__->serializable_columns(qw/clothing_id name category_id/);
 
-sub TO_JSON {
-	my $self = shift;
-
-	return {
-		clothing_id => $self->clothing_id,
-		name        => $self->name,
-		category_id => $self->category_id
-	};
-}
-
 1;

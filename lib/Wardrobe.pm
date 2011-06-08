@@ -23,7 +23,7 @@ use Catalyst qw/
     -Debug
     ConfigLoader
     Static::Simple
-    Unicode
+    Unicode::Encoding
 /;
 
 use Data::Dumper;
@@ -33,6 +33,7 @@ extends 'Catalyst';
 our $VERSION = '0.01';
 
 __PACKAGE__->config('Plugin::ConfigLoader' => { file => 'Wardrobe.conf'});
+__PACKAGE__->config( encoding => 'UTF-8' );
 
 our $logger = Catalyst::Log::Log4perl->new();
 __PACKAGE__->log($logger);
@@ -50,7 +51,7 @@ sub prepare_path {
 
 	$c->SUPER::prepare_path(@_);
 	my $path = $c->request->path;
-	$c->log->info("PATH: $path");
+	$c->log->info("PATH: $path. ENCODING: " . $c->encoding->name);
 
 	if ($path =~ /^json\/.*$/) {
 		$c->log->info("Switching Output to JSON");

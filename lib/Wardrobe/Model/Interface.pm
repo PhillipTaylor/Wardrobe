@@ -4,9 +4,20 @@ use namespace::autoclean;
 use WardrobeORM;
 use WardrobeORM::ResultSet::Clothing;
 use Text::CSV::Encoded;
-use Log::Log4perl qw(get_logger);
 
-extends 'Catalyst::Model';
+extends 'Catalyst::Model::DBIC::Schema';
+use base 'Catalyst::Model';
+
+__PACKAGE__->config(
+    schema_class => 'WardrobeORM',
+    
+    connect_info => {
+        dsn => 'dbi:Pg:dbname=wardrobe',
+        user => 'username',
+        password => 'password',
+		pg_enable_utf8 => 1
+    }
+);
 
 my $log = Log::Log4perl->get_logger();
 
@@ -60,7 +71,7 @@ sub create_from_csv_file {
 					next;
 				}
 
-				my $is_new = create_clothing_and_category($clothing_name, $category_name);
+				my $is_new = $self->create_clothing_and_category($clothing_name, $category_name);
 
 				if ($is_new) {
 					$log->debug("LINE: $line - ADDED");
@@ -84,9 +95,9 @@ sub create_from_csv_file {
 }
 
 sub create_clothing_and_category {
-	my ($clothing_name, $category_name) = @_;
+	my ($self, $clothing_name, $category_name) = @_;
 	
-	my $clothing_rs = WardrobeORM->get_schema()->resultset('Clothing');
+	my $clothing_rs = $self->resultset('Clothing');
 	return $clothing_rs->create_with_category($clothing_name, $category_name);
 
 }
