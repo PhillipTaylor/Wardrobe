@@ -46,7 +46,7 @@ sub index :Chained('cat_root') :PathPart('') :Args(0) {
 sub category :Chained('cat_root') :PathPart('category') :Args(2) {
 	my ($self, $c, $category_id, $category_name) = @_;
 
-	my @clothes = $c->model('Clothing')->get_clothes_by_category($category_id);
+	my @clothes = $c->model('Bindings')->get_clothes_by_category($category_id);
 
 	my $breadcrumb = $c->stash->{'breadcrumb'};
 	$breadcrumb->push('category',"category/$category_id/$category_name");

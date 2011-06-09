@@ -40,9 +40,9 @@ sub index :Chained('clo_root') :PathPart('') :Args(0) {
 	if (lc $c->req->method eq 'post') {
 		$search_qry = $c->req->params->{"name_filter"};
 		$c->log->debug("search query: $search_qry.");
-		@clothes = $c->model('Bindings::Clothing')->get_clothes_by_name($search_qry);
+		@clothes = $c->model('Bindings')->get_clothes_by_name($search_qry);
 	} else {
-		@clothes = $c->model('Bindings::Clothing')->get_all_clothes();
+		@clothes = $c->model('Bindings')->get_all_clothes();
 	}
 	
 	$c->log->debug("There are " . scalar @clothes . " clothing items: " . join(@clothes,', '));
@@ -75,7 +75,7 @@ sub index :Chained('clo_root') :PathPart('') :Args(0) {
 sub clothing :Chained('clo_root') :PathPart('clothing') :Args(2) {
 	my ($self, $c, $clothing_id, $clothing_name) = @_;
 
-	my $item = $c->model('Clothing')->get_clothing_by_id($clothing_id);
+	my $item = $c->model('Bindings')->get_clothing_by_id($clothing_id);
 
 	my $breadcrumbs = $c->stash->{'breadcrumb'};
 	$breadcrumbs->push('clothing', "clothing/$clothing_id/$clothing_name");

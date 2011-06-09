@@ -76,7 +76,7 @@ sub csv_upload :Chained('root') :Args(0) {
 	}
 
 	# assume header record for website
-	my ($rows, $bad, $dupes) = $c->model('Interface')->create_from_csv_file($upload->tempname, 1);
+	my ($rows, $bad, $dupes) = $c->model('Bindings')->create_from_csv_file($upload->tempname, 1);
 
 	$c->stash(
 		template        => 'index.tt',

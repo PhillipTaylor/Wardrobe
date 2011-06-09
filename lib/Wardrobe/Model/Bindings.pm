@@ -11,5 +11,6 @@ __PACKAGE__->config (
         user           => 'username',
         password       => 'password',
         pg_enable_utf8 => 1
-    }
+    },
+	traits => ['SchemaProxy']
 );
