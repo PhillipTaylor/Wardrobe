@@ -1,5 +1,5 @@
 
-package Wardrobe::TemplateUtil;
+package Wardrobe::Util::TemplateUtil;
 
 # register all these functions
 sub init {

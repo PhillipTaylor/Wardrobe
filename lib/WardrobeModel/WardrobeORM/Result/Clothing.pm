@@ -1,5 +1,5 @@
 
-package WardrobeORM::Result::Clothing;
+package WardrobeModel::WardrobeORM::Result::Clothing;
 use base qw/DBIx::Class::Core/;
 
 #__PACKAGE__->load_components(qw{Helper::Row::ToJSON});
@@ -20,8 +20,8 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('clothing_id');
 __PACKAGE__->add_unique_constraint(['name']);
-__PACKAGE__->belongs_to('category', 'WardrobeORM::Result::Category', 'category_id');
-__PACKAGE__->has_many('tagged_clothing', 'WardrobeORM::Result::TaggedClothing', 'clothing_id');
+__PACKAGE__->belongs_to('category', 'WardrobeModel::WardrobeORM::Result::Category', 'category_id');
+__PACKAGE__->has_many('tagged_clothing', 'WardrobeModel::WardrobeORM::Result::TaggedClothing', 'clothing_id');
 __PACKAGE__->many_to_many('outfits', 'tagged_clothing', 'outfit');
 
 #__PACKAGE__->serializable_columns(qw/clothing_id name category_id/);

@@ -2,8 +2,7 @@ package Wardrobe::Controller::Tags;
 use Moose;
 use namespace::autoclean;
 
-use Wardrobe::Model::Outfit;
-use Wardrobe::TemplateUtil (qw/cln/);
+use Wardrobe::Util::TemplateUtil (qw/cln/);
 
 BEGIN {extends 'Catalyst::Controller'; }
 

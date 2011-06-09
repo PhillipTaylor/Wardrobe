@@ -1,9 +1,9 @@
 package Wardrobe::Controller::Root;
 use Moose;
 use namespace::autoclean;
-use Wardrobe::Model::Interface;
-use Wardrobe::TemplateUtil;
-use Breadcrumbs;
+
+use Wardrobe::Util::TemplateUtil;
+use Wardrobe::Util::Breadcrumbs;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -33,9 +33,9 @@ sub root :Chained('/') :PathPart('') :CaptureArgs(0) {
 	my ($self, $c) = @_;
 
 	# register template util functions
-	Wardrobe::TemplateUtil->init($c);
+	Wardrobe::Util::TemplateUtil->init($c);
 
-	my $breadcrumbs = Breadcrumbs->new();
+	my $breadcrumbs = Wardrobe::Util::Breadcrumbs->new();
 	$c->stash->{'breadcrumb'} = $breadcrumbs;
 	$breadcrumbs->push('home', '');
 	$c->log->debug('breadcrumb set: ' . $breadcrumbs->get_depth() );

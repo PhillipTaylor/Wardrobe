@@ -1,23 +1,12 @@
-package Wardrobe::Model::Interface;
+package WardrobeModel::Interface;
 use Moose;
 use namespace::autoclean;
-use WardrobeORM;
-use WardrobeORM::ResultSet::Clothing;
+use WardrobeModel::WardrobeORM;
+use WardrobeModel::WardrobeORM::ResultSet::Clothing;
 use Text::CSV::Encoded;
 
 extends 'Catalyst::Model::DBIC::Schema';
 use base 'Catalyst::Model';
-
-__PACKAGE__->config(
-    schema_class => 'WardrobeORM',
-    
-    connect_info => {
-        dsn => 'dbi:Pg:dbname=wardrobe',
-        user => 'username',
-        password => 'password',
-		pg_enable_utf8 => 1
-    }
-);
 
 my $log = Log::Log4perl->get_logger();
 

@@ -3,7 +3,7 @@ use Data::Dump 'pp';
 use Log::Log4perl qw(get_logger);
 
 {
-	package Breadcrumbs;
+	package Wardrobe::Util::Breadcrumbs;
 	use Moose;
 
 	has 'log',

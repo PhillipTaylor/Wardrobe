@@ -40,9 +40,9 @@ sub index :Chained('clo_root') :PathPart('') :Args(0) {
 	if (lc $c->req->method eq 'post') {
 		$search_qry = $c->req->params->{"name_filter"};
 		$c->log->debug("search query: $search_qry.");
-		@clothes = $c->model('Clothing')->get_clothes_by_name($search_qry);
+		@clothes = $c->model('Bindings::Clothing')->get_clothes_by_name($search_qry);
 	} else {
-		@clothes = $c->model('Clothing')->get_all_clothes();
+		@clothes = $c->model('Bindings::Clothing')->get_all_clothes();
 	}
 	
 	$c->log->debug("There are " . scalar @clothes . " clothing items: " . join(@clothes,', '));

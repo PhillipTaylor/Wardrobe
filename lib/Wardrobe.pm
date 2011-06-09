@@ -1,7 +1,6 @@
 package Wardrobe;
 use Moose;
 use namespace::autoclean;
-use WardrobeORM;
 
 use Catalyst::Runtime 5.80;
 

@@ -2,9 +2,6 @@ package Wardrobe::Controller::Categories;
 use Moose;
 use namespace::autoclean;
 
-use Wardrobe::Model::Categories;
-use Wardrobe::Model::Clothing;
-
 BEGIN {extends 'Catalyst::Controller'; }
 
 =head1 NAME

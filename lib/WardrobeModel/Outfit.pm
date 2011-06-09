@@ -1,21 +1,9 @@
-package Wardrobe::Model::Outfit;
+package WardrobeModel::Outfit;
 use Moose;
 use namespace::autoclean;
-use WardrobeORM;
 
 extends 'Catalyst::Model::DBIC::Schema';
 use base 'Catalyst::Model';
-
-__PACKAGE__->config(
-    schema_class => 'WardrobeORM',
-    
-    connect_info => {
-        dsn => 'dbi:Pg:dbname=wardrobe',
-        user => 'username',
-        password => 'password',
-		pg_enable_utf8 => 1
-    }
-);
 
 sub get_all_outfits {
 	my $self = shift;
@@ -53,25 +41,6 @@ sub tag_clothing_to_outfit {
 
 	return $tagged_clothing;
 }
-
-=head1 NAME
-
-Wardrobe::Model::Outfit - Catalyst Model
-
-=head1 DESCRIPTION
-
-Catalyst Model.
-
-=head1 AUTHOR
-
-PTaylor,,,
-
-=head1 LICENSE
-
-This library is free software. You can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=cut
 
 __PACKAGE__->meta->make_immutable;
 

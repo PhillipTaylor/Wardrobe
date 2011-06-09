@@ -1,10 +1,10 @@
 
-package WardrobeORM::ResultSet::Clothing;
-use base WardrobeORM::ResultSetBase;
+package WardrobeModel::WardrobeORM::ResultSet::Clothing;
+use base WardrobeModel::WardrobeORM::ResultSetBase;
 
 __PACKAGE__->load_components();
 
-use WardrobeORM;
+use WardrobeModel::WardrobeORM;
 
 sub create_with_category {
 	my ($self, $clothing_name, $category_name) = @_;
@@ -16,7 +16,7 @@ sub create_with_category {
 	my $is_new = 0;
 
 	if (!$clothing_item) {
-		my $category_rs = WardrobeORM->resultset('Category');
+		my $category_rs = WardrobeModel::WardrobeORM->resultset('Category');
 		my $category = $category_rs->find_or_create_by_name($category_name);
 
 		$self->create({
