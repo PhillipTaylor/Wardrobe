@@ -32,7 +32,7 @@ sub cat_root :Chained('/root') :PathPart('categories') :CaptureArgs(0) {
 sub index :Chained('cat_root') :PathPart('') :Args(0) {
 	my ($self, $c) = @_;
 
-	my @categories = $c->model('Categories')->get_all_categories();
+	my @categories = $c->model('Bindings')->get_all_categories();
 
 	$c->log->debug("There are " . scalar @categories . " categories: " . join(@categories,', '));
 
