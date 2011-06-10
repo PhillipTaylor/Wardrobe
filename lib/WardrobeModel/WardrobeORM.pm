@@ -3,6 +3,7 @@ package WardrobeModel::WardrobeORM;
 use Moose;
 use namespace::autoclean;
 use Text::CSV::Encoded;
+use WardrobeModel::CSVResults;
 use base qw/DBIx::Class::Schema/;
 
 use Log::Log4perl qw(get_logger);
@@ -59,68 +60,54 @@ sub create_from_csv_file {
 		allow_whitespace => 1
 	});
 
-	open my $fh, "<", $csv_filename;
+	my $results = WardrobeModel::CSVResults->new();
+	my $first_row = 0;
 
-	my $line_no   = 0;
-	my $bad       = 0;
-	my $dupes     = 0;
+	open my $fh, "<", $csv_filename;
 
 	while (my $raw_line = $parser->getline($fh)) {
 		my $line = $parser->string($raw_line);
 		chomp($line);
 
 		if (!$parser->parse($line)) {
-			$bad++;
-			$log->debug("LINE: $line - BAD");
-		} else {
-
-			if ($line_no == 0 && $header_record) {
-				$line_no++;
-				$log->debug("LINE: $line - HEADER RECORD");
-				next;
-			} else {
-				my @cols = $parser->fields($line);
-
-				if (@cols < 2) {
-					$bad++;
-					$line_no++;
-					$log->debug("LINE: $line - MISSING FIELDS");
-					next;
-				}
-
-				(my $clothing_name, my $category_name) = @cols;
-
-				if ($clothing_name eq '' || $category_name eq '') {
-					$bad++;
-					$line_no++;
-					$log->debug("LINE: $line - EMPTY STRING FIELD");
-					next;
-				}
-
-				my $is_new = $self->create_clothing_and_category($clothing_name, $category_name);
-
-				if ($is_new) {
-					$log->debug("LINE: $line - ADDED");
-				} else {
-					$log->debug("LINE: $line - DUPE");
-					$dupes++;
-				}
-
-			}
+			$results->mark_broken($line);
+			next;
 		}
 
-		$line_no++;
+		if ($first_row == 0 && $header_record) {
+			$first_row = 1;
+			next;
+		} 
+		
+		my @cols = $parser->fields($line);
+
+		if (@cols < 2) {
+			$results->mark_broken($line);
+			next;
+		}
+
+		(my $clothing_name, my $category_name) = @cols;
+
+		if ($clothing_name eq '' || $category_name eq '') {
+			$results->mark_broken($line);
+			next;
+		}
+
+		my $is_new = $self->_create_clothing_and_category($clothing_name, $category_name);
+
+		if ($is_new) {
+			$results->mark_ok($line);			
+		} else {
+			$results->mark_dupe($line);
+		}
 	}
 
 	close $fh;
 
-	# ensure record count is accurate.
-	$line_no-- unless !$header_record;
-
-	return ($line_no, $bad, $dupes);
+	return $results;
 }
 
-sub create_clothing_and_category {
+sub _create_clothing_and_category {
 	my ($self, $clothing_name, $category_name) = @_;
 
 	my $clothing_rs = $self->resultset('Clothing');

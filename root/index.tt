@@ -22,16 +22,16 @@
 				<th></th>
 			</tr>
 			<tr>
-				<td>Total Rows</td>
-				<td>[% rows %]</td>
+				<td><b>Total Rows</b></td>
+				<td><b>[% csv_results.get_total_count %]</b></td>
 			</tr>
 			<tr>
 				<td>Bad Record</td>
-				<td>[% bad %]</td>
+				<td><b>[% csv_results.get_broken_count %]</b></td>
 			</tr>
 			<tr>
 				<td>Dupes</td>
-				<td>[% dupes %]</td>
+				<td><b>[% csv_results.get_dupe_count %]</b></td>
 			</tr>
 		</table>
 	</div>

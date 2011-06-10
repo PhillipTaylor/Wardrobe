@@ -68,8 +68,6 @@ sub default :Chained('root') :Args(0) {
 sub csv_upload :Chained('root') :Args(0) {
 	my ( $self, $c) = @_;
 	
-	$c->log->debug('breadcrumb later = ' . join(', ', keys %{ $c->stash }));
-
 	my @results = ();
 	my $upload = $c->req->upload('csv_file');
 
@@ -79,16 +77,12 @@ sub csv_upload :Chained('root') :Args(0) {
 	}
 
 	# assume header record for website
-	$c->log->debug('enter the function');
-	my ($rows, $bad, $dupes) = $c->model('Bindings')->create_from_csv_file($upload->tempname, 1);
-	$c->log->debug('return from function');
+	my $csv_results = $c->model('Bindings')->create_from_csv_file($upload->tempname, 1);
 
 	$c->stash(
 		template        => 'index.tt',
 		upload_complete => 1,
-		rows            => $rows,
-		bad             => $bad,
-		dupes           => $dupes
+		csv_results     => $csv_results,
 	);
 
 }
