@@ -63,23 +63,22 @@ alter table tagged_clothing add constraint ctagged_clothing_fk2
 -- insert some sample data
 
 insert into category (id, name) values (default, 'Shirt');
+	insert into clothing (id, name, category_id) values (default, 'Blue / Green Shirt', currval('category_id_seq'));
+	insert into clothing (id, name, category_id) values (default, 'Red Shirt', currval('category_id_seq'));
+	insert into clothing (id, name, category_id) values (default, 'Green Shirt', currval('category_id_seq'));
+	insert into clothing (id, name, category_id) values (default, 'Yellow Shirt', currval('category_id_seq'));
+
 insert into category (id, name) values (default, 'Shoes');
+	insert into clothing (id, name, category_id) values (default, 'Black Shoes', currval('category_id_seq'));
+	insert into clothing (id, name, category_id) values (default, 'Brown Shoes', currval('category_id_seq'));
+
 insert into category (id, name) values (default, 'Socks');
+	insert into clothing (id, name, category_id) values (default, 'Brown Socks', currval('category_id_seq'));
+	insert into clothing (id, name, category_id) values (default, 'White Socks', currval('category_id_seq'));
+	insert into clothing (id, name, category_id) values (default, 'Black Socks', currval('category_id_seq'));
+
 insert into category (id, name) values (default, 'Shorts');
-
-insert into clothing (id, name, category_id) values (default, 'Blue Shirt', 1);
-insert into clothing (id, name, category_id) values (default, 'Red Shirt', 1);
-insert into clothing (id, name, category_id) values (default, 'Green Shirt', 1);
-insert into clothing (id, name, category_id) values (default, 'Yellow Shirt', 1);
-
-insert into clothing (id, name, category_id) values (default, 'Black Shoes', 2);
-insert into clothing (id, name, category_id) values (default, 'Brown Shoes', 2);
-
-insert into clothing (id, name, category_id) values (default, 'Brown Socks', 3);
-insert into clothing (id, name, category_id) values (default, 'White Socks', 3);
-insert into clothing (id, name, category_id) values (default, 'Black Socks', 3);
-
-insert into clothing (id, name, category_id) values (default, 'Swimming Trunks', 4);
-insert into clothing (id, name, category_id) values (default, 'Baggy Shorts', 4);
-insert into clothing (id, name, category_id) values (default, 'Bermuda Shorts', 4);
-insert into clothing (id, name, category_id) values (default, 'Professional Style Shorts', 4);
+	insert into clothing (id, name, category_id) values (default, 'Swimming Trunks', currval('category_id_seq'));
+	insert into clothing (id, name, category_id) values (default, 'Baggy Shorts', currval('category_id_seq'));
+	insert into clothing (id, name, category_id) values (default, 'Bermuda Shorts', currval('category_id_seq'));
+	insert into clothing (id, name, category_id) values (default, 'Professional Style Shorts', currval('category_id_seq'));
