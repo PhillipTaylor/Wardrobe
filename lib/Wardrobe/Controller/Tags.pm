@@ -73,10 +73,10 @@ sub add :Chained('tag_root') :PathPart('add') :Args(0) {
 	}
 
 	my $outfit = $c->model('Bindings')->find_or_create_outfit($outfit_name);
-	$c->model('Bindings')->tag_clothing_to_outfit($outfit->outfit_id, $clothing_id);
+	$c->model('Bindings')->tag_clothing_to_outfit($outfit->id, $clothing_id);
 
 	my $cln_name = Wardrobe::Util::TemplateUtil::cln($outfit_name);
-	$c->res->redirect($c->uri_for('tag', $outfit->outfit_id, $cln_name));
+	$c->res->redirect($c->uri_for('tag', $outfit->id, $cln_name));
 
 }
 

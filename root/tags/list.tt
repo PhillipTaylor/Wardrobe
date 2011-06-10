@@ -9,7 +9,7 @@
 			List of available outfits
 			<ul>
 			[% FOREACH outfit = outfits -%]
-				<li><a href="[% c.uri_for('tag', outfit.outfit_id, cln(outfit.name)) %]">[% outfit.name | html %]</a></li>
+				<li><a href="[% c.uri_for('tag', outfit.id, cln(outfit.name)) %]">[% outfit.name | html %]</a></li>
 			[% END %]
 			</ul>
 		[% ELSE %]

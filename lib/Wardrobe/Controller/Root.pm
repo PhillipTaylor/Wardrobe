@@ -32,13 +32,16 @@ The root page (/)
 sub root :Chained('/') :PathPart('') :CaptureArgs(0) {
 	my ($self, $c) = @_;
 
+	$c->log->debug('BEGIN OF ROOT::root()');
+
 	# register template util functions
 	Wardrobe::Util::TemplateUtil->init($c);
 
 	my $breadcrumbs = Wardrobe::Util::Breadcrumbs->new();
 	$c->stash->{'breadcrumb'} = $breadcrumbs;
 	$breadcrumbs->push('home', '');
-	$c->log->debug('breadcrumb set: ' . $breadcrumbs->get_depth() );
+	
+	$c->log->debug('END OF ROOT::root()');
 
 }
 
@@ -76,7 +79,9 @@ sub csv_upload :Chained('root') :Args(0) {
 	}
 
 	# assume header record for website
+	$c->log->debug('enter the function');
 	my ($rows, $bad, $dupes) = $c->model('Bindings')->create_from_csv_file($upload->tempname, 1);
+	$c->log->debug('return from function');
 
 	$c->stash(
 		template        => 'index.tt',

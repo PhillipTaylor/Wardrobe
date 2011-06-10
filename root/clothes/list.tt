@@ -26,7 +26,7 @@
 			[% category_name  = categories.$category_id %]
 			[% clothing_items = category.value %]
 
-			<b><a href="[% c.uri_for(c.controller('Categories').action_for('category') category_id, cln(category_name)) %]">[% category_name | html %]</a></b>
+			<b><a href="[% c.uri_for(c.controller('Categories').action_for('category'), category_id, cln(category_name)) %]">[% category_name | html %]</a></b>
 			<ul>
 			[% FOREACH clothing_item = clothing_items -%]
 					<li>

@@ -7,7 +7,7 @@ use base qw/DBIx::Class::Core/;
 __PACKAGE__->table('clothing');
 
 __PACKAGE__->add_columns(
-	clothing_id => {
+	id => {
 		is_serializable => 1
 	}, 
 	name => {
@@ -18,7 +18,7 @@ __PACKAGE__->add_columns(
 	}
 );
 
-__PACKAGE__->set_primary_key('clothing_id');
+__PACKAGE__->set_primary_key('id');
 __PACKAGE__->add_unique_constraint(['name']);
 __PACKAGE__->belongs_to('category', 'WardrobeModel::WardrobeORM::Result::Category', 'category_id');
 __PACKAGE__->has_many('tagged_clothing', 'WardrobeModel::WardrobeORM::Result::TaggedClothing', 'clothing_id');

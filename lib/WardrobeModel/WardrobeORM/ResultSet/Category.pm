@@ -13,7 +13,12 @@ sub find_or_create_by_name {
 		name => $category_name
 	}, { key => 'category_name' });
 
+	$self->log()->debug("return from category: $category_name");
+
 	return $category;
 }
 
 1;
+
+
+	#my $category = $self->find_or_create({name => $category_name}, { key => 'category_name' });

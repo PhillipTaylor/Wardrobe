@@ -6,7 +6,7 @@ __PACKAGE__->load_components(qw{Helper::Row::ToJSON});
 
 __PACKAGE__->table('outfit');
 __PACKAGE__->add_columns(
-	outfit_id => {
+	id => {
 		is_serializable => 1
 	},
 	name => {
@@ -15,7 +15,7 @@ __PACKAGE__->add_columns(
 
 );
 
-__PACKAGE__->set_primary_key('outfit_id');
+__PACKAGE__->set_primary_key('id');
 __PACKAGE__->has_many('tagged_clothing', 'WardrobeModel::WardrobeORM::Result::TaggedClothing', 'outfit_id');
 __PACKAGE__->many_to_many('clothes', 'tagged_clothing', 'clothing');
 
