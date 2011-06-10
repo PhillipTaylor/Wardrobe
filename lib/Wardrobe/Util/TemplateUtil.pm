@@ -5,7 +5,7 @@ package Wardrobe::Util::TemplateUtil;
 sub init {
 	my ($self, $c) = @_;
 
-	$c->stash->{'cln'} = \&cln;
+	$c->stash->{cln} = \&cln;
 }
 
 

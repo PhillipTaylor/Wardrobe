@@ -38,7 +38,7 @@ sub root :Chained('/') :PathPart('') :CaptureArgs(0) {
 	Wardrobe::Util::TemplateUtil->init($c);
 
 	my $breadcrumbs = Wardrobe::Util::Breadcrumbs->new();
-	$c->stash->{'breadcrumb'} = $breadcrumbs;
+	$c->stash->{breadcrumb} = $breadcrumbs;
 	$breadcrumbs->push('home', '');
 	
 	$c->log->debug('END OF ROOT::root()');

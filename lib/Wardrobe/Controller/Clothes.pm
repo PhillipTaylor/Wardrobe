@@ -24,7 +24,7 @@ Catalyst Controller.
 sub clo_root :Chained('/root') :PathPart('clothes') :CaptureArgs(0) {
 	my ($self, $c) = @_;
 	
-	my $breadcrumbs = $c->stash->{'breadcrumb'};
+	my $breadcrumbs = $c->stash->{breadcrumb};
 	$breadcrumbs->push('clothes', 'clothes');
 }
 
@@ -60,9 +60,6 @@ sub index :Chained('clo_root') :PathPart('') :Args(0) {
 		$result_count++;
 	}
 
-	use Data::Dump qw(pp);
-	pp (\%clothes_by_cat);
-
 	$c->stash(
 		template    => 'clothes/list.tt',
 		clothes     => \%clothes_by_cat,
@@ -77,7 +74,7 @@ sub clothing :Chained('clo_root') :PathPart('clothing') :Args(2) {
 
 	my $item = $c->model('Bindings')->get_clothing_by_id($clothing_id);
 
-	my $breadcrumbs = $c->stash->{'breadcrumb'};
+	my $breadcrumbs = $c->stash->{breadcrumb};
 	$breadcrumbs->push('clothing', "clothing/$clothing_id/$clothing_name");
 
 	$c->stash(

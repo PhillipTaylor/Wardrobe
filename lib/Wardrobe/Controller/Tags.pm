@@ -26,7 +26,7 @@ Catalyst Controller.
 sub tag_root :Chained('/root') :PathPart('tags') :CaptureArgs(0) {
 	my ($self, $c) = @_;
 	
-	my $breadcrumbs = $c->stash->{'breadcrumb'};
+	my $breadcrumbs = $c->stash->{breadcrumb};
 	$breadcrumbs->push('tags', 'tags');
 }
 
@@ -46,7 +46,7 @@ sub tag :Chained('tag_root') :PathPart('tag') :Args(2) {
 
 	my $outfit = $c->model('Bindings')->get_outfit_by_id($outfit_id);
 
-	my $breadcrumbs = $c->stash->{'breadcrumb'};
+	my $breadcrumbs = $c->stash->{breadcrumb};
 	$breadcrumbs->push('tag', "tag/$outfit_id/$outfit_name");
 
 	$c->stash(

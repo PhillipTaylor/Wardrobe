@@ -51,7 +51,7 @@ sub extend_href {
 		return '/';
 	}
 
-	$full_url = $parent->{'href'} . $additional_url . '/';
+	$full_url = $parent->{href} . $additional_url . '/';
 	return $full_url;
 }
 
