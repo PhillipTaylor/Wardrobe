@@ -1,27 +1,23 @@
 
-use Data::Dump 'pp';
-use Log::Log4perl qw(get_logger);
-
 package Wardrobe::Util::Breadcrumbs;
 use Moose;
 
-has 'log',
-	is      => 'ro',
-	lazy_build => 0,
-	default => sub { return Log::Log4perl->get_logger(); };
+use Data::Dump 'pp';
+use Log::Log4perl qw(get_logger);
+
+my $log = Log::Log4perl->get_logger();
 
 has 'breadcrumbs',
 	is      => 'rw',
 	isa     => 'ArrayRef[HashRef]',
-	builder => '_init_breadcrumbs',
-	lazy_build => 1;
+	builder => '_init_breadcrumbs';
 #   writer  => accessor_method
 #   default => 'text'
 
 sub _init_breadcrumbs {
 	my $self = shift;
 
-	$self->log->debug("Breadcrumb Initialised");
+	$log->debug("Breadcrumb Initialised");
 	$self->breadcrumbs([]);
 }
 
@@ -30,7 +26,7 @@ sub push {
 
 	my $full_url = $self->extend_href($url);
 
-	$self->log->debug("Breadcrumb Pushed: $name ($url expanded to $full_url). New length: "
+	$log->debug("Breadcrumb Pushed: $name ($url expanded to $full_url). New length: "
 		. $self->get_depth()
 	);
 

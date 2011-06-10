@@ -97,7 +97,6 @@ sub create_from_csv_file {
 					next;
 				}
 
-				$log->debug('INVOKING');
 				my $is_new = $self->create_clothing_and_category($clothing_name, $category_name);
 
 				if ($is_new) {
@@ -124,12 +123,8 @@ sub create_from_csv_file {
 sub create_clothing_and_category {
 	my ($self, $clothing_name, $category_name) = @_;
 
-	$log->debug('>>>>>');
-
 	my $clothing_rs = $self->resultset('Clothing');
 	return $clothing_rs->create_with_category($clothing_name, $category_name);
-	
-	$log->debug('<<<<<');
 
 }
 

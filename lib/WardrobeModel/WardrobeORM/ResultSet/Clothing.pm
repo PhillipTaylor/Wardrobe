@@ -2,18 +2,18 @@
 package WardrobeModel::WardrobeORM::ResultSet::Clothing;
 use base WardrobeModel::WardrobeORM::ResultSetBase;
 
+use Log::Log4perl qw(get_logger);
+
 __PACKAGE__->load_components();
+
+my $log = Log::Log4perl->get_logger();
 
 sub create_with_category {
 	my ($self, $clothing_name, $category_name) = @_;
 
-	$self->log->debug('here 1');
-
 	my $clothing_item = $self->search({
 		name => $clothing_name
 	})->single;
-
-	$self->log->debug('here 2');
 
 	my $is_new = 0;
 
